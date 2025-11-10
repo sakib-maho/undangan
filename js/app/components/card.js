@@ -125,7 +125,7 @@ export const card = (() => {
      */
     const renderTracker = (c) => {
         // Hide IP and user agent information from all users
-        return '';
+            return '';
     };
 
     /**

@@ -51,7 +51,7 @@ export const like = (() => {
                             heart.classList.add('fa-solid', 'text-golden');
                         } else {
                             heart.classList.remove('fa-solid', 'text-golden');
-                            heart.classList.add('fa-regular');
+                        heart.classList.add('fa-regular');
                         }
 
                         info.setAttribute('data-count-like', String(newCount));
