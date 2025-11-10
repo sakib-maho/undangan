@@ -124,7 +124,7 @@ export const comment = (() => {
 
         // Free for commercial and non-commercial use.
         await request(HTTP_GET, `https://apip.cc/api-json/${c.ip}`)
-            .withCache()
+            .withCache(1000 * 60 * 60 * 24)
             .withRetry()
             .default()
             .then((res) => res.json())
@@ -201,7 +201,7 @@ export const comment = (() => {
 
         return request(HTTP_GET, `/api/v2/comment?per=${pagination.getPer()}&next=${pagination.getNext()}&lang=${lang.getLanguage()}`)
             .token(session.getToken())
-            .withCache(1000 * 30)
+            .withCache(1000 * 60 * 5)
             .withForceCache()
             .send(dto.getCommentsResponseV2)
             .then(async (res) => {
@@ -233,7 +233,33 @@ export const comment = (() => {
 
                 return res;
             })
+            .catch((err) => {
+                comments.setAttribute('data-loading', 'false');
+                
+                // Handle rate limit errors gracefully
+                if (err.status === 429 || err.code === 429) {
+                    // Show cached comments if available, or show a friendly message
+                    const cachedContent = comments.innerHTML;
+                    if (cachedContent && !cachedContent.includes('skeleton-card')) {
+                        // Keep existing cached content and return null to skip next then
+                        return null;
+                    }
+                    comments.innerHTML = `<div class="alert alert-warning rounded-4 shadow-sm p-3">
+                        <p class="mb-0">${err.message || '🟨 Too many requests. Please try again later.'}</p>
+                        <small class="text-muted">Comments are cached and will refresh automatically.</small>
+                    </div>`;
+                    return null;
+                }
+                
+                // Re-throw other errors
+                throw err;
+            })
             .then(async (res) => {
+                // Skip if rate limit error was handled
+                if (res === null) {
+                    return;
+                }
+                
                 comments.dispatchEvent(new Event('undangan.comment.result'));
 
                 if (res.data.lists && session.isAdmin()) {

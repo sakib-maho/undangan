@@ -335,6 +335,19 @@ export const request = (method, path) => {
                     }));
                 }
 
+                // Handle rate limit (429) specifically
+                if (res.status === 429) {
+                    return res.clone().json().catch(() => ({ error: ['Too many requests. Please try again later.'] })).then((json) => {
+                        const msg = json.error && Array.isArray(json.error) && json.error.length > 0 
+                            ? json.error[0] 
+                            : 'Too many requests. Please try again later.';
+                        const err = new Error(`🟨 ${msg}`);
+                        err.status = 429;
+                        err.code = 429;
+                        throw err;
+                    });
+                }
+
                 return res.json().then((json) => {
                     if (json.error) {
                         const msg = json.error.at(0);
@@ -353,6 +366,13 @@ export const request = (method, path) => {
                 if (err.name === ERROR_ABORT) {
                     console.warn('Fetch aborted:', err);
                     return err;
+                }
+
+                // Handle rate limit errors gracefully
+                if (err.status === 429 || err.code === 429) {
+                    console.warn('Rate limit exceeded:', err.message);
+                    // Don't show alert for rate limit - let the error message be handled by the caller
+                    throw err;
                 }
 
                 if (err.name === ERROR_TYPE) {

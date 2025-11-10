@@ -34,7 +34,7 @@ export const admin = (() => {
         storage('config').set('tenor_key', res.data.tenor_key);
         document.dispatchEvent(new Event('undangan.session'));
 
-        request(HTTP_GET, '/api/stats').token(session.getToken()).withCache(1000 * 30).withForceCache().send().then((resp) => {
+        request(HTTP_GET, '/api/stats').token(session.getToken()).withCache(1000 * 60 * 2).withForceCache().send().then((resp) => {
             document.getElementById('count-comment').textContent = String(resp.data.comments).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             document.getElementById('count-like').textContent = String(resp.data.likes).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
             document.getElementById('count-present').textContent = String(resp.data.present).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
