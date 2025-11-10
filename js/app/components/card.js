@@ -52,10 +52,17 @@ export const card = (() => {
      * @returns {string}
      */
     const renderLike = (c) => {
+        const likeCount = c.like_count || 0;
+        const hasLikes = likeCount > 0;
+        const isLiked = likes.has(c.uuid);
+        
+        // Show golden heart if comment has at least one like OR if current user has liked it
+        const showGoldenHeart = hasLikes || isLiked;
+        
         return `
         <button style="font-size: 0.8rem;" onclick="undangan.comment.like.love(this)" data-uuid="${c.uuid}" class="btn btn-sm btn-outline-auto ms-auto rounded-3 p-0 shadow-sm d-flex justify-content-start align-items-center" data-offline-disabled="false">
-            <span class="my-0 mx-1" data-count-like="${c.like_count}">${c.like_count}</span>
-            <i class="me-1 ${likes.has(c.uuid) ? 'fa-solid fa-heart text-danger' : 'fa-regular fa-heart'}"></i>
+            <span class="my-0 mx-1" data-count-like="${likeCount}">${likeCount}</span>
+            <i class="me-1 ${showGoldenHeart ? 'fa-solid fa-heart text-golden' : 'fa-regular fa-heart'}"></i>
         </button>`;
     };
 
@@ -117,15 +124,8 @@ export const card = (() => {
      * @returns {string}
      */
     const renderTracker = (c) => {
-        if (!c.ip || !c.user_agent || c.is_admin) {
-            return '';
-        }
-
-        return `
-        <div class="mb-1 mt-3">
-            <p class="text-theme-auto mb-1 mx-0 mt-0 p-0" style="font-size: 0.7rem;" id="ip-${c.uuid}"><i class="fa-solid fa-location-dot me-1"></i>${util.escapeHtml(c.ip)} <span class="mb-1 placeholder col-2 rounded-3"></span></p>
-            <p class="text-theme-auto m-0 p-0" style="font-size: 0.7rem;"><i class="fa-solid fa-mobile-screen-button me-1"></i>${util.parseUserAgent(util.escapeHtml(c.user_agent))}</p>
-        </div>`;
+        // Hide IP and user agent information from all users
+        return '';
     };
 
     /**

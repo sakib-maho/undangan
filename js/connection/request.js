@@ -435,6 +435,11 @@ export const request = (method, path) => {
                     throw err;
                 }
 
+                // Don't show alert for "already liked" errors - handled silently
+                if (err.message && err.message.includes('already liked')) {
+                    throw err;
+                }
+
                 if (err.name === ERROR_TYPE) {
                     err = new Error('🟥 Network error or rate limit exceeded');
                 }

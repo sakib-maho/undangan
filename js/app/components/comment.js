@@ -105,68 +105,8 @@ export const comment = (() => {
      * @returns {Promise<void>}
      */
     const fetchTracker = async (c) => {
-        if (!session.isAdmin()) {
-            return;
-        }
-
-        // Process nested comments first
-        if (c.comments) {
-            for (const comment of c.comments) {
-                await fetchTracker(comment);
-                // Add delay between nested comment IP lookups
-                await new Promise(resolve => setTimeout(resolve, 200));
-            }
-        }
-
-        if (!c.ip || !c.user_agent || c.is_admin) {
-            return;
-        }
-
-        /**
-         * @param {string} result 
-         * @returns {void}
-         */
-        const setResult = (result) => {
-            const commentIp = document.getElementById(`ip-${util.escapeHtml(c.uuid)}`);
-            if (commentIp) {
-                util.safeInnerHTML(commentIp, `<i class="fa-solid fa-location-dot me-1"></i>${util.escapeHtml(c.ip)} <strong>${util.escapeHtml(result)}</strong>`);
-            }
-        };
-
-        // Skip IP lookup if rate limited - use cached data only
-        try {
-            // Free for commercial and non-commercial use.
-            await request(HTTP_GET, `https://apip.cc/api-json/${c.ip}`)
-                .withCache(1000 * 60 * 60 * 24)
-                .withRetry(1, 500)
-                .default()
-                .then((res) => res.json())
-                .then((res) => {
-                    let result = 'localhost';
-
-                    if (res.status === 'success') {
-                        if (res.City.length !== 0 && res.RegionName.length !== 0) {
-                            result = res.City + ' - ' + res.RegionName;
-                        } else if (res.Capital.length !== 0 && res.CountryName.length !== 0) {
-                            result = res.Capital + ' - ' + res.CountryName;
-                        }
-                    }
-
-                    setResult(result);
-                })
-                .catch((err) => {
-                    // On rate limit or error, skip IP lookup to prevent further API calls
-                    if (err.status === 429 || err.code === 429) {
-                        console.warn('Skipping IP lookup due to rate limit');
-                        setResult('Location unavailable');
-                    } else {
-                        setResult(err.message);
-                    }
-                });
-        } catch (err) {
-            // Silently fail - don't block comment rendering
-            console.warn('IP lookup failed:', err);
-        }
+        // IP and user agent tracking disabled - no longer displayed in frontend
+        return;
     };
 
     /**
@@ -226,8 +166,7 @@ export const comment = (() => {
 
         return request(HTTP_GET, `/api/v2/comment?per=${pagination.getPer()}&next=${pagination.getNext()}&lang=${lang.getLanguage()}`)
             .token(session.getToken())
-            .withCache(1000 * 60 * 60 * 24)
-            .withForceCache()
+            .withCache(1000 * 60 * 5) // Reduced to 5 minutes instead of 24 hours
             .send(dto.getCommentsResponseV2)
             .then(async (res) => {
                 comments.setAttribute('data-loading', 'false');

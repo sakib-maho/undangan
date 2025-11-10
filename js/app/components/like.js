@@ -35,18 +35,30 @@ export const like = (() => {
         }
 
         if (likes.has(id)) {
-            await request(HTTP_PATCH, '/api/comment/' + likes.get(id))
+            await request(HTTP_PATCH, '/api/comment/' + id)
                 .token(session.getToken())
                 .send(dto.statusResponse)
                 .then((res) => {
                     if (res.data.status) {
                         likes.unset(id);
 
-                        heart.classList.remove('fa-solid', 'text-danger');
-                        heart.classList.add('fa-regular');
+                        // Check if there are still likes after unliking
+                        const newCount = res.data.like_count !== undefined ? res.data.like_count : count - 1;
+                        const hasLikes = newCount > 0;
+                        
+                        if (hasLikes) {
+                            heart.classList.remove('fa-regular');
+                            heart.classList.add('fa-solid', 'text-golden');
+                        } else {
+                            heart.classList.remove('fa-solid', 'text-golden');
+                            heart.classList.add('fa-regular');
+                        }
 
-                        info.setAttribute('data-count-like', String(count - 1));
+                        info.setAttribute('data-count-like', String(newCount));
                     }
+                })
+                .catch((err) => {
+                    console.warn('Unlike error:', err);
                 })
                 .finally(() => {
                     info.innerText = info.getAttribute('data-count-like');
@@ -57,13 +69,28 @@ export const like = (() => {
                 .token(session.getToken())
                 .send(dto.uuidResponse)
                 .then((res) => {
-                    if (res.code === HTTP_STATUS_CREATED) {
-                        likes.set(id, res.data.uuid);
+                    if (res.code === HTTP_STATUS_CREATED || res.code === 200) {
+                        likes.set(id, id);
 
                         heart.classList.remove('fa-regular');
-                        heart.classList.add('fa-solid', 'text-danger');
+                        heart.classList.add('fa-solid', 'text-golden');
 
-                        info.setAttribute('data-count-like', String(count + 1));
+                        // Get updated like count from server response if available
+                        const newCount = res.data.like_count !== undefined ? res.data.like_count : count + 1;
+                        info.setAttribute('data-count-like', String(newCount));
+                    }
+                })
+                .catch((err) => {
+                    if (err.message && err.message.includes('already liked')) {
+                        // Silently handle "already liked" - just update UI without showing error
+                        likes.set(id, id);
+                        heart.classList.remove('fa-regular');
+                        heart.classList.add('fa-solid', 'text-golden');
+                        // Don't update count if already liked - server will return current count
+                        // Don't show any error message
+                    } else {
+                        // Only throw error if it's not "already liked"
+                        throw err;
                     }
                 })
                 .finally(() => {
