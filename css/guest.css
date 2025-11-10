@@ -1,6 +1,14 @@
 @import url("common.css");
 @import url("animation.css");
 
+/* Arabian Golden Color Palette */
+:root {
+    --arabian-gold: #D4AF37;
+    --arabian-gold-light: #F4D03F;
+    --arabian-gold-dark: #B8860B;
+    --arabian-gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F4D03F 50%, #D4AF37 100%);
+}
+
 html {
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
@@ -90,6 +98,106 @@ html[data-bs-theme="dark"] .bg-white-black {
     .width-loading {
         width: 50%;
     }
+}
+
+/* Arabian Golden Text Styles */
+.text-arabian-gold {
+    color: var(--arabian-gold) !important;
+}
+
+.text-arabian-gold-gradient {
+    background: var(--arabian-gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Golden accent for main headings */
+.font-esthetic.text-golden {
+    color: var(--arabian-gold);
+    text-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.font-esthetic.text-golden-light {
+    color: var(--arabian-gold-light);
+    text-shadow: 0 1px 4px rgba(212, 175, 55, 0.2);
+}
+
+/* Desktop Sidebar Golden Styling */
+.desktop-sidebar-text h2 {
+    color: var(--arabian-gold);
+    text-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    font-weight: 600;
+}
+
+.desktop-sidebar-text p {
+    color: var(--arabian-gold-light);
+    text-shadow: 0 1px 4px rgba(212, 175, 55, 0.2);
+}
+
+.desktop-sidebar-overlay {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(244, 208, 63, 0.1) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.15);
+}
+
+/* Welcome Page Golden Styling */
+.welcome-image-golden {
+    border-color: var(--arabian-gold) !important;
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4), 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+}
+
+/* Golden border for all circular images */
+.img-center-crop.rounded-circle {
+    border-color: var(--arabian-gold) !important;
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4), 0 0 0 2px rgba(212, 175, 55, 0.2) !important;
+    transition: all 0.3s ease;
+}
+
+.img-center-crop.rounded-circle:hover {
+    box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5), 0 0 0 3px rgba(212, 175, 55, 0.3) !important;
+    transform: scale(1.02);
+}
+
+.welcome-button-golden {
+    background: linear-gradient(135deg, var(--arabian-gold) 0%, var(--arabian-gold-light) 100%) !important;
+    border-color: var(--arabian-gold-dark) !important;
+    color: #000 !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.welcome-button-golden:hover {
+    background: linear-gradient(135deg, var(--arabian-gold-light) 0%, var(--arabian-gold) 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5) !important;
+    color: #000 !important;
+}
+
+.welcome-button-golden:active {
+    transform: translateY(0);
+}
+
+/* Golden accent for Arabic text */
+.font-arabic.text-golden {
+    color: var(--arabian-gold);
+    text-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+/* Golden Quote Cards */
+.quote-card-golden {
+    border-left-color: var(--arabian-gold) !important;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(244, 208, 63, 0.05) 100%) !important;
+}
+
+.quote-card-golden::before {
+    color: rgba(212, 175, 55, 0.3) !important;
+}
+
+.quote-card-golden:hover {
+    border-left-color: var(--arabian-gold-light) !important;
+    box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15) !important;
 }
 
 @media screen and (max-width: 576px) {
