@@ -200,6 +200,88 @@ html[data-bs-theme="dark"] .bg-white-black {
     background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(244, 208, 63, 0.05) 100%) !important;
 }
 
+/* Navigation Menu Golden Styling */
+#navbar-menu .nav-link {
+    color: var(--arabian-gold) !important;
+    transition: all 0.3s ease;
+}
+
+#navbar-menu .nav-link:hover {
+    color: var(--arabian-gold-light) !important;
+    transform: translateY(-2px);
+}
+
+#navbar-menu .nav-link.active {
+    color: var(--arabian-gold-light) !important;
+}
+
+#navbar-menu .nav-link span {
+    transition: all 0.3s ease;
+}
+
+#navbar-menu .nav-link:hover span {
+    transform: scale(1.05);
+}
+
+/* Navigation Icons Golden Styling with Animations */
+.nav-icon-golden {
+    color: var(--arabian-gold) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+    animation: nav-icon-pulse 2s ease-in-out infinite;
+}
+
+#navbar-menu .nav-link:hover .nav-icon-golden {
+    color: var(--arabian-gold-light) !important;
+    transform: scale(1.2) rotate(5deg);
+    animation: nav-icon-glow 1.5s ease-in-out infinite;
+}
+
+#navbar-menu .nav-link.active .nav-icon-golden {
+    color: var(--arabian-gold-light) !important;
+    animation: nav-icon-glow 1.5s ease-in-out infinite;
+}
+
+/* Navigation Icon Animations */
+@keyframes nav-icon-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+@keyframes nav-icon-glow {
+    0%, 100% {
+        text-shadow: 0 0 5px rgba(212, 175, 55, 0.5),
+                     0 0 10px rgba(212, 175, 55, 0.3),
+                     0 0 15px rgba(212, 175, 55, 0.2);
+        transform: scale(1.1);
+    }
+    50% {
+        text-shadow: 0 0 10px rgba(244, 208, 63, 0.8),
+                     0 0 20px rgba(244, 208, 63, 0.5),
+                     0 0 30px rgba(244, 208, 63, 0.3);
+        transform: scale(1.15);
+    }
+}
+
+@keyframes nav-icon-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+#navbar-menu .nav-link:active .nav-icon-golden {
+    animation: nav-icon-bounce 0.3s ease;
+}
+
 .quote-card-golden::before {
     color: rgba(212, 175, 55, 0.3) !important;
 }
