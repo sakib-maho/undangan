@@ -702,8 +702,13 @@
 
     <!-- Welcome Page -->
     <div class="loading-page bg-white-black" id="welcome" style="opacity: 0;">
-        <div class="d-flex justify-content-center align-items-center vh-100 overflow-y-auto">
-            <div class="d-flex flex-column text-center">
+        <div class="d-flex justify-content-center align-items-center vh-100 overflow-y-auto position-relative">
+            <!-- Background Video for Mobile -->
+            <video autoplay loop muted playsinline class="welcome-video-bg d-md-none" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.3;">
+                <source src="./assets/images/Copy of Gold and Teal Illustrated_Nikaah_Invitation_Mobile.mp4" type="video/mp4">
+            </video>
+            
+            <div class="d-flex flex-column text-center position-relative" style="z-index: 1;">
                 <h2 class="font-esthetic mb-4 text-golden" style="font-size: 2.25rem;">Wedding Invitation</h2>
 
                 <img src="./assets/images/placeholder.webp" data-src="./assets/images/bg.webp" alt="background" class="img-center-crop rounded-circle border border-3 border-light shadow mb-4 mx-auto welcome-image-golden">
