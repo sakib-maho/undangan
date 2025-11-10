@@ -85,7 +85,11 @@ export const guest = (() => {
 
         const form = document.getElementById('form-name');
         if (form) {
-            form.value = information.get('name') ?? name;
+            // Only set value from URL parameter, not from storage, so placeholder shows when empty
+            if (name) {
+                form.value = name;
+            }
+            // Don't set from storage to allow placeholder to show
         }
     };
 
