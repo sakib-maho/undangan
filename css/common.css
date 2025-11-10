@@ -118,3 +118,128 @@ html[data-bs-theme="light"] .bg-overlay-auto {
 .gif-image {
     max-height: 10rem;
 }
+
+/* Enhanced Accessibility - Focus States */
+*:focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+}
+
+html[data-bs-theme="dark"] *:focus-visible {
+    outline-color: var(--bs-info);
+}
+
+html[data-bs-theme="light"] *:focus-visible {
+    outline-color: var(--bs-primary);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline-width: 3px;
+    outline-offset: 3px;
+}
+
+/* Skip to main content link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--bs-primary);
+    color: var(--bs-white);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    z-index: 10000;
+    border-radius: 0 0 0.25rem 0;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* Enhanced Button Focus States */
+.btn:focus-visible {
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.5);
+}
+
+.btn-outline-auto:focus-visible {
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-light-rgb), 0.5);
+}
+
+html[data-bs-theme="light"] .btn-outline-auto:focus-visible {
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-dark-rgb), 0.5);
+}
+
+/* Enhanced Contrast for Better Readability */
+html[data-bs-theme="dark"] .text-muted {
+    color: rgba(var(--bs-light-rgb), 0.7) !important;
+}
+
+html[data-bs-theme="light"] .text-muted {
+    color: rgba(var(--bs-dark-rgb), 0.7) !important;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    * {
+        border-width: 2px !important;
+    }
+    
+    .btn {
+        border-width: 2px !important;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Customization Variables */
+:root {
+    --custom-primary-color: var(--bs-primary);
+    --custom-secondary-color: var(--bs-secondary);
+    --custom-font-size-base: 1rem;
+    --custom-font-size-sm: 0.875rem;
+    --custom-font-size-lg: 1.125rem;
+    --custom-spacing-unit: 1rem;
+    --custom-border-radius: 0.5rem;
+    --custom-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --custom-shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Custom Spacing Utilities */
+.spacing-xs {
+    margin: calc(var(--custom-spacing-unit) * 0.25);
+    padding: calc(var(--custom-spacing-unit) * 0.25);
+}
+
+.spacing-sm {
+    margin: calc(var(--custom-spacing-unit) * 0.5);
+    padding: calc(var(--custom-spacing-unit) * 0.5);
+}
+
+.spacing-md {
+    margin: var(--custom-spacing-unit);
+    padding: var(--custom-spacing-unit);
+}
+
+.spacing-lg {
+    margin: calc(var(--custom-spacing-unit) * 1.5);
+    padding: calc(var(--custom-spacing-unit) * 1.5);
+}
+
+.spacing-xl {
+    margin: calc(var(--custom-spacing-unit) * 2);
+    padding: calc(var(--custom-spacing-unit) * 2);
+}

@@ -1,0 +1,234 @@
+/* Customization Options CSS */
+/* This file provides additional customization options for colors, fonts, and spacing */
+
+:root {
+    /* Color Customization */
+    --custom-primary-color: var(--bs-primary);
+    --custom-secondary-color: var(--bs-secondary);
+    --custom-accent-color: #8573F1;
+    --custom-success-color: var(--bs-success);
+    --custom-danger-color: var(--bs-danger);
+    --custom-warning-color: var(--bs-warning);
+    --custom-info-color: var(--bs-info);
+    
+    /* Font Customization */
+    --custom-font-family-base: 'Josefin Sans', sans-serif;
+    --custom-font-family-decorative: 'Sacramento', cursive;
+    --custom-font-family-arabic: 'Noto Naskh Arabic', serif;
+    
+    /* Font Size Customization */
+    --custom-font-size-xs: 0.75rem;
+    --custom-font-size-sm: 0.875rem;
+    --custom-font-size-base: 1rem;
+    --custom-font-size-lg: 1.125rem;
+    --custom-font-size-xl: 1.25rem;
+    --custom-font-size-xxl: 1.5rem;
+    --custom-font-size-hero: 2.25rem;
+    
+    /* Spacing Customization */
+    --custom-spacing-xs: 0.25rem;
+    --custom-spacing-sm: 0.5rem;
+    --custom-spacing-md: 1rem;
+    --custom-spacing-lg: 1.5rem;
+    --custom-spacing-xl: 2rem;
+    --custom-spacing-xxl: 3rem;
+    
+    /* Border Radius Customization */
+    --custom-border-radius-sm: 0.25rem;
+    --custom-border-radius-md: 0.5rem;
+    --custom-border-radius-lg: 0.75rem;
+    --custom-border-radius-xl: 1rem;
+    --custom-border-radius-pill: 50rem;
+    --custom-border-radius-circle: 50%;
+    
+    /* Shadow Customization */
+    --custom-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --custom-shadow-md: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    --custom-shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    --custom-shadow-xl: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+    
+    /* Transition Customization */
+    --custom-transition-fast: 150ms ease;
+    --custom-transition-base: 300ms ease;
+    --custom-transition-slow: 500ms ease;
+    
+    /* Z-index Customization */
+    --custom-z-dropdown: 1000;
+    --custom-z-sticky: 1020;
+    --custom-z-fixed: 1030;
+    --custom-z-modal-backdrop: 1040;
+    --custom-z-modal: 1050;
+    --custom-z-popover: 1060;
+    --custom-z-tooltip: 1070;
+}
+
+/* Custom Color Classes */
+.text-custom-primary {
+    color: var(--custom-primary-color) !important;
+}
+
+.text-custom-secondary {
+    color: var(--custom-secondary-color) !important;
+}
+
+.text-custom-accent {
+    color: var(--custom-accent-color) !important;
+}
+
+.bg-custom-primary {
+    background-color: var(--custom-primary-color) !important;
+}
+
+.bg-custom-secondary {
+    background-color: var(--custom-secondary-color) !important;
+}
+
+.bg-custom-accent {
+    background-color: var(--custom-accent-color) !important;
+}
+
+.border-custom-primary {
+    border-color: var(--custom-primary-color) !important;
+}
+
+.border-custom-secondary {
+    border-color: var(--custom-secondary-color) !important;
+}
+
+.border-custom-accent {
+    border-color: var(--custom-accent-color) !important;
+}
+
+/* Custom Font Size Classes */
+.font-size-xs {
+    font-size: var(--custom-font-size-xs) !important;
+}
+
+.font-size-sm {
+    font-size: var(--custom-font-size-sm) !important;
+}
+
+.font-size-base {
+    font-size: var(--custom-font-size-base) !important;
+}
+
+.font-size-lg {
+    font-size: var(--custom-font-size-lg) !important;
+}
+
+.font-size-xl {
+    font-size: var(--custom-font-size-xl) !important;
+}
+
+.font-size-xxl {
+    font-size: var(--custom-font-size-xxl) !important;
+}
+
+.font-size-hero {
+    font-size: var(--custom-font-size-hero) !important;
+}
+
+/* Custom Spacing Classes */
+.m-custom-xs {
+    margin: var(--custom-spacing-xs) !important;
+}
+
+.m-custom-sm {
+    margin: var(--custom-spacing-sm) !important;
+}
+
+.m-custom-md {
+    margin: var(--custom-spacing-md) !important;
+}
+
+.m-custom-lg {
+    margin: var(--custom-spacing-lg) !important;
+}
+
+.m-custom-xl {
+    margin: var(--custom-spacing-xl) !important;
+}
+
+.p-custom-xs {
+    padding: var(--custom-spacing-xs) !important;
+}
+
+.p-custom-sm {
+    padding: var(--custom-spacing-sm) !important;
+}
+
+.p-custom-md {
+    padding: var(--custom-spacing-md) !important;
+}
+
+.p-custom-lg {
+    padding: var(--custom-spacing-lg) !important;
+}
+
+.p-custom-xl {
+    padding: var(--custom-spacing-xl) !important;
+}
+
+/* Custom Border Radius Classes */
+.rounded-custom-sm {
+    border-radius: var(--custom-border-radius-sm) !important;
+}
+
+.rounded-custom-md {
+    border-radius: var(--custom-border-radius-md) !important;
+}
+
+.rounded-custom-lg {
+    border-radius: var(--custom-border-radius-lg) !important;
+}
+
+.rounded-custom-xl {
+    border-radius: var(--custom-border-radius-xl) !important;
+}
+
+/* Custom Shadow Classes */
+.shadow-custom-sm {
+    box-shadow: var(--custom-shadow-sm) !important;
+}
+
+.shadow-custom-md {
+    box-shadow: var(--custom-shadow-md) !important;
+}
+
+.shadow-custom-lg {
+    box-shadow: var(--custom-shadow-lg) !important;
+}
+
+.shadow-custom-xl {
+    box-shadow: var(--custom-shadow-xl) !important;
+}
+
+/* Custom Transition Classes */
+.transition-fast {
+    transition: var(--custom-transition-fast) !important;
+}
+
+.transition-base {
+    transition: var(--custom-transition-base) !important;
+}
+
+.transition-slow {
+    transition: var(--custom-transition-slow) !important;
+}
+
+/* Responsive Font Sizes */
+@media (max-width: 576px) {
+    :root {
+        --custom-font-size-hero: 1.75rem;
+        --custom-font-size-xxl: 1.25rem;
+        --custom-font-size-xl: 1.125rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    :root {
+        --custom-font-size-hero: 2.5rem;
+        --custom-font-size-xxl: 1.75rem;
+    }
+}
+

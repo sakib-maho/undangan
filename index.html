@@ -60,6 +60,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha256-2FMn2Zx6PuH5tdBQDRNwrOo60ts5wWPC9R8jK67b3t4=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css" integrity="sha256-4rTIfo5GQTi/7UJqoyUJQKzxW8VN/YBH31+Cy+vTZj4=" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/guest.css">
+    <link rel="stylesheet" href="./css/customization.css">
 
     <!-- Dependencies JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha256-5P1JGBOIxI7FBAvT/mb1fCnI5n/NhQKzNUuW7Hq0fMc=" crossorigin="anonymous"></script>
@@ -87,6 +88,9 @@
 <!-- <html lang="id" data-bs-theme="auto"> ['auto', 'dark', 'light'] -->
 
 <body data-key="d9faced3377732b0edf19e90d1bde0cd5de04801c75eb41743" data-url="https://api.ulems.my.id/" data-audio="./assets/music/pure-love-304010.mp3" data-confetti="true" data-time="2024-01-01 09:30:00">
+
+    <!-- Skip to main content link for accessibility -->
+    <a href="#home" class="skip-link">Skip to main content</a>
 
     <!-- Root Invitation -->
     <div class="row m-0 p-0 opacity-0" id="root">
@@ -537,17 +541,19 @@
                             <h2 class="font-esthetic text-center mt-2 mb-4" style="font-size: 2.25rem;">Ucapan &amp; Doa</h2>
 
                             <div class="mb-3">
-                                <label for="form-name" class="form-label my-1"><i class="fa-solid fa-person me-2"></i>Nama</label>
-                                <input dir="auto" type="text" class="form-control shadow-sm rounded-4" id="form-name" minlength="2" maxlength="50" placeholder="Isikan Nama Anda" autocomplete="name" data-offline-disabled="false">
+                                <label for="form-name" class="form-label my-1"><i class="fa-solid fa-person me-2" aria-hidden="true"></i>Nama</label>
+                                <input dir="auto" type="text" class="form-control shadow-sm rounded-4" id="form-name" minlength="2" maxlength="50" placeholder="Isikan Nama Anda" autocomplete="name" aria-required="true" aria-describedby="form-name-help" data-offline-disabled="false">
+                                <small id="form-name-help" class="form-text text-muted d-none">Masukkan nama Anda (minimal 2 karakter)</small>
                             </div>
 
                             <div class="mb-3">
-                                <label for="form-presence" class="form-label my-1"><i class="fa-solid fa-person-circle-question me-2"></i>Presensi</label>
-                                <select class="form-select shadow-sm rounded-4" id="form-presence" autocomplete="off" data-offline-disabled="false">
+                                <label for="form-presence" class="form-label my-1"><i class="fa-solid fa-person-circle-question me-2" aria-hidden="true"></i>Presensi</label>
+                                <select class="form-select shadow-sm rounded-4" id="form-presence" autocomplete="off" aria-required="true" aria-describedby="form-presence-help" data-offline-disabled="false">
                                     <option value="0" selected>Konfirmasi Presensi</option>
                                     <option value="1">&#9989; Datang</option>
                                     <option value="2">&#10060; Berhalangan</option>
                                 </select>
+                                <small id="form-presence-help" class="form-text text-muted d-none">Pilih status kehadiran Anda</small>
                             </div>
 
                             <div class="d-block mb-3" id="comment-form-default">
@@ -560,24 +566,27 @@
                                     <p class="m-0">Sama bisa format text seperti Whatsapp lohh... cobainn jugaaa, makaciwww bestieee</p>
                                 </div>
 
-                                <label for="form-comment" class="form-label my-1"><i class="fa-solid fa-comment me-2"></i>Ucapan &amp; Doa</label>
+                                <label for="form-comment" class="form-label my-1"><i class="fa-solid fa-comment me-2" aria-hidden="true"></i>Ucapan &amp; Doa</label>
                                 <div class="position-relative">
-                                    <button class="btn btn-secondary btn-sm rounded-4 shadow-sm me-1 my-1 position-absolute bottom-0 end-0" onclick="undangan.comment.gif.open(undangan.comment.gif.default)" aria-label="button gif" data-offline-disabled="false"><i class="fa-solid fa-photo-film"></i></button>
-                                    <textarea dir="auto" class="form-control shadow-sm rounded-4" id="form-comment" rows="4" minlength="1" maxlength="1000" placeholder="Tulis Ucapan dan Doa" autocomplete="off" data-offline-disabled="false"></textarea>
+                                    <button class="btn btn-secondary btn-sm rounded-4 shadow-sm me-1 my-1 position-absolute bottom-0 end-0" onclick="undangan.comment.gif.open(undangan.comment.gif.default)" aria-label="Open GIF picker" data-offline-disabled="false"><i class="fa-solid fa-photo-film" aria-hidden="true"></i></button>
+                                    <textarea dir="auto" class="form-control shadow-sm rounded-4" id="form-comment" rows="4" minlength="1" maxlength="1000" placeholder="Tulis Ucapan dan Doa" autocomplete="off" aria-required="true" aria-describedby="form-comment-help" data-offline-disabled="false"></textarea>
+                                    <small id="form-comment-help" class="form-text text-muted d-none">Tuliskan ucapan dan doa Anda (maksimal 1000 karakter)</small>
                                 </div>
                             </div>
 
                             <div class="d-none mb-3" id="gif-form-default"></div>
 
                             <div class="d-grid">
-                                <button class="btn btn-primary btn-sm rounded-4 shadow m-1" onclick="undangan.comment.send(this)" data-offline-disabled="false">
-                                    <i class="fa-solid fa-paper-plane me-2"></i>Send
+                                <button class="btn btn-primary btn-sm rounded-4 shadow m-1" onclick="undangan.comment.send(this)" aria-label="Send comment" data-offline-disabled="false">
+                                    <i class="fa-solid fa-paper-plane me-2" aria-hidden="true"></i>Send
                                 </button>
                             </div>
                         </div>
 
                         <!-- Comments -->
-                        <div class="py-3" id="comments" data-loading="false"></div>
+                        <div class="py-3" id="comments" data-loading="false" role="region" aria-label="Comments section">
+                            <!-- Loading skeleton will be inserted here -->
+                        </div>
 
                         <!-- Pagination -->
                         <nav class="d-flex d-none justify-content-center mt-1 mb-0" id="pagination"></nav>
@@ -616,35 +625,35 @@
             </main>
 
             <!-- Navbar Bottom -->
-            <nav class="navbar navbar-expand sticky-bottom rounded-top-4 border-top p-0" id="navbar-menu">
+            <nav class="navbar navbar-expand sticky-bottom rounded-top-4 border-top p-0" id="navbar-menu" role="navigation" aria-label="Main navigation">
                 <ul class="navbar-nav nav-justified w-100 align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#home">
-                            <i class="fa-solid fa-house"></i>
+                        <a class="nav-link" href="#home" aria-label="Go to home section">
+                            <i class="fa-solid fa-house" aria-hidden="true"></i>
                             <span class="d-block" style="font-size: 0.7rem;">Home</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#bride">
-                            <i class="fa-solid fa-user-group"></i>
+                        <a class="nav-link" href="#bride" aria-label="Go to bride section">
+                            <i class="fa-solid fa-user-group" aria-hidden="true"></i>
                             <span class="d-block" style="font-size: 0.7rem;">Mempelai</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#wedding-date">
-                            <i class="fa-solid fa-calendar-check"></i>
+                        <a class="nav-link" href="#wedding-date" aria-label="Go to wedding date section">
+                            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
                             <span class="d-block" style="font-size: 0.7rem;">Tanggal</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#gallery">
-                            <i class="fa-solid fa-images"></i>
+                        <a class="nav-link" href="#gallery" aria-label="Go to gallery section">
+                            <i class="fa-solid fa-images" aria-hidden="true"></i>
                             <span class="d-block" style="font-size: 0.7rem;">Galeri</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#comment">
-                            <i class="fa-solid fa-comments"></i>
+                        <a class="nav-link" href="#comment" aria-label="Go to comments section">
+                            <i class="fa-solid fa-comments" aria-hidden="true"></i>
                             <span class="d-block" style="font-size: 0.7rem;">Ucapan</span>
                         </a>
                     </li>
@@ -672,13 +681,13 @@
     <!-- Button Group -->
     <div class="d-flex position-fixed flex-column" style="bottom: 10vh; right: 2vh; z-index: 1030;">
         <!-- Theme Button -->
-        <button type="button" id="button-theme" class="btn bg-light-dark border btn-sm rounded-circle d-none btn-transparent shadow-sm mt-3" aria-label="Change theme" onclick="undangan.theme.change()">
-            <i class="fa-solid fa-circle-half-stroke"></i>
+        <button type="button" id="button-theme" class="btn bg-light-dark border btn-sm rounded-circle d-none btn-transparent shadow-sm mt-3" aria-label="Change theme" aria-pressed="false" onclick="undangan.theme.change()">
+            <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
         </button>
 
         <!-- Audio Button -->
-        <button type="button" id="button-music" class="btn bg-light-dark border btn-sm rounded-circle d-none btn-transparent shadow-sm mt-3" aria-label="Change audio" data-offline-disabled="false">
-            <i class="fa-solid fa-circle-pause spin-button"></i>
+        <button type="button" id="button-music" class="btn bg-light-dark border btn-sm rounded-circle d-none btn-transparent shadow-sm mt-3" aria-label="Toggle background music" aria-pressed="false" data-offline-disabled="false">
+            <i class="fa-solid fa-circle-pause spin-button" aria-hidden="true"></i>
         </button>
     </div>
 

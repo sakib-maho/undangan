@@ -32,17 +32,18 @@ export const card = (() => {
      */
     const renderLoading = () => {
         return `
-        <div class="bg-theme-auto shadow p-3 mx-0 mt-0 mb-3 rounded-4">
-            <div class="d-flex justify-content-between align-items-center placeholder-wave">
-                <span class="placeholder bg-secondary col-5 rounded-3 my-1"></span>
-                <span class="placeholder bg-secondary col-3 rounded-3 my-1"></span>
+        <div class="bg-theme-auto shadow p-3 mx-0 mt-0 mb-3 rounded-4 skeleton-card" role="status" aria-label="Loading comment">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="skeleton skeleton-title" style="width: 40%;"></div>
+                <div class="skeleton skeleton-text" style="width: 25%;"></div>
             </div>
-            <hr class="my-1">
-            <p class="placeholder-wave m-0">
-                <span class="placeholder bg-secondary col-6 rounded-3"></span>
-                <span class="placeholder bg-secondary col-5 rounded-3"></span>
-                <span class="placeholder bg-secondary col-12 rounded-3 my-1"></span>
-            </p>
+            <div class="skeleton skeleton-text" style="width: 100%;"></div>
+            <div class="skeleton skeleton-text" style="width: 85%; margin-top: 0.5rem;"></div>
+            <div class="skeleton skeleton-text" style="width: 70%; margin-top: 0.5rem;"></div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="skeleton skeleton-text" style="width: 30%;"></div>
+                <div class="skeleton skeleton-text" style="width: 20%;"></div>
+            </div>
         </div>`;
     };
 

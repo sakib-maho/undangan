@@ -39,6 +39,8 @@ export const image = (() => {
         el.height = img.naturalHeight;
         el.classList.remove('opacity-0');
         el.src = img.src;
+        el.classList.add('loaded');
+        el.removeAttribute('data-src');
         img.remove();
 
         progress.complete('image');
@@ -68,10 +70,12 @@ export const image = (() => {
         el.onload = () => {
             el.width = el.naturalWidth;
             el.height = el.naturalHeight;
+            el.classList.add('loaded');
             progress.complete('image');
         };
 
         if (el.complete && el.naturalWidth !== 0 && el.naturalHeight !== 0) {
+            el.classList.add('loaded');
             progress.complete('image');
         } else if (el.complete) {
             progress.invalid('image');

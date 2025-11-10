@@ -113,3 +113,45 @@ svg {
 .no-gap-bottom {
     margin-bottom: -0.75rem !important;
 }
+
+/* Progressive Image Loading */
+img[data-src] {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+img[data-src].loaded {
+    opacity: 1;
+}
+
+/* Image Loading Placeholder Enhancement */
+img[data-src]:not(.loaded) {
+    background: linear-gradient(
+        90deg,
+        rgba(var(--bs-gray-rgb), 0.1) 0%,
+        rgba(var(--bs-gray-rgb), 0.15) 50%,
+        rgba(var(--bs-gray-rgb), 0.1) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+html[data-bs-theme="dark"] img[data-src]:not(.loaded) {
+    background: linear-gradient(
+        90deg,
+        rgba(var(--bs-gray-rgb), 0.2) 0%,
+        rgba(var(--bs-gray-rgb), 0.25) 50%,
+        rgba(var(--bs-gray-rgb), 0.2) 100%
+    );
+    background-size: 200% 100%;
+}
+
+/* Blur-up effect for images */
+.img-blur-up {
+    filter: blur(5px);
+    transition: filter 0.3s ease-in-out;
+}
+
+.img-blur-up.loaded {
+    filter: blur(0);
+}
