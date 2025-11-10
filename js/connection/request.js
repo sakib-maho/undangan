@@ -245,7 +245,33 @@ export const request = (method, path) => {
                     return Promise.resolve(res);
                 }
 
-                return cw.del(input).then(wrapperFetch).then((r) => cw.set(input, r, reqForceCache, reqTtl));
+                // Cache expired or doesn't exist - try network but keep stale cache for fallback
+                return wrapperFetch()
+                    .then((r) => {
+                        // Success - update cache
+                        return cw.set(input, r, reqForceCache, reqTtl).then(() => r);
+                    })
+                    .catch((err) => {
+                        // On rate limit error, try to use stale cache if available (even if expired)
+                        if ((err.status === 429 || err.code === 429) && reqForceCache) {
+                            // Check cache again - it might have been there but expired
+                            return cw.has(input).then((staleRes) => {
+                                if (staleRes) {
+                                    console.warn('Using stale cache due to rate limit:', input.toString());
+                                    return Promise.resolve(staleRes);
+                                }
+                                // Also try to get from cache storage directly (bypass expiry check)
+                                return pool.getInstance(cacheRequest).match(input).then((directCache) => {
+                                    if (directCache) {
+                                        console.warn('Using expired cache due to rate limit:', input.toString());
+                                        return Promise.resolve(directCache);
+                                    }
+                                    throw err;
+                                });
+                            });
+                        }
+                        throw err;
+                    });
             });
         };
 

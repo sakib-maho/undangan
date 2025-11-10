@@ -7,7 +7,7 @@ import { dto } from '../../connection/dto.js';
 import { lang } from '../../common/language.js';
 import { storage } from '../../common/storage.js';
 import { session } from '../../common/session.js';
-import { request, HTTP_GET, HTTP_POST, HTTP_DELETE, HTTP_PUT, HTTP_STATUS_CREATED } from '../../connection/request.js';
+import { request, HTTP_GET, HTTP_POST, HTTP_DELETE, HTTP_PUT, HTTP_STATUS_CREATED, cacheWrapper, cacheRequest, pool } from '../../connection/request.js';
 
 export const comment = (() => {
 
@@ -201,7 +201,7 @@ export const comment = (() => {
 
         return request(HTTP_GET, `/api/v2/comment?per=${pagination.getPer()}&next=${pagination.getNext()}&lang=${lang.getLanguage()}`)
             .token(session.getToken())
-            .withCache(1000 * 60 * 5)
+            .withCache(1000 * 60 * 60 * 24)
             .withForceCache()
             .send(dto.getCommentsResponseV2)
             .then(async (res) => {
@@ -233,20 +233,57 @@ export const comment = (() => {
 
                 return res;
             })
-            .catch((err) => {
+            .catch(async (err) => {
                 comments.setAttribute('data-loading', 'false');
                 
-                // Handle rate limit errors gracefully
+                // Handle rate limit errors gracefully - try to use cached data
                 if (err.status === 429 || err.code === 429) {
-                    // Show cached comments if available, or show a friendly message
+                    // Try to load from cache even if expired
+                    try {
+                        const cw = cacheWrapper(cacheRequest);
+                        const cacheKey = new URL(`/api/v2/comment?per=${pagination.getPer()}&next=${pagination.getNext()}&lang=${lang.getLanguage()}`, document.body.getAttribute('data-url'));
+                        
+                        const cachedRes = await cw.has(cacheKey);
+                        if (cachedRes) {
+                            console.warn('Using cached comments due to rate limit');
+                            const json = await cachedRes.json();
+                            const res = { code: 200, data: dto.getCommentsResponseV2(json.data) };
+                            
+                            // Render cached comments
+                            if (res.data.lists.length === 0) {
+                                comments.innerHTML = onNullComment();
+                                return res;
+                            }
+
+                            const flatten = (ii) => ii.flatMap((i) => [i.uuid, ...flatten(i.comments)]);
+                            lastRender.splice(0, lastRender.length, ...flatten(res.data.lists));
+                            showHide.set('hidden', traverse(res.data.lists, showHide.get('hidden')));
+
+                            let data = await card.renderContentMany(res.data.lists);
+                            if (res.data.lists.length < pagination.getPer()) {
+                                data += onNullComment();
+                            }
+
+                            util.safeInnerHTML(comments, data);
+
+                            lastRender.forEach((u) => {
+                                like.addListener(u);
+                            });
+                            
+                            return res;
+                        }
+                    } catch (cacheErr) {
+                        console.warn('Cache retrieval failed:', cacheErr);
+                    }
+                    
+                    // No cache available, show friendly message
                     const cachedContent = comments.innerHTML;
                     if (cachedContent && !cachedContent.includes('skeleton-card')) {
-                        // Keep existing cached content and return null to skip next then
                         return null;
                     }
                     comments.innerHTML = `<div class="alert alert-warning rounded-4 shadow-sm p-3">
                         <p class="mb-0">${err.message || '🟨 Too many requests. Please try again later.'}</p>
-                        <small class="text-muted">Comments are cached and will refresh automatically.</small>
+                        <small class="text-muted">Comments are cached and will refresh automatically when available.</small>
                     </div>`;
                     return null;
                 }
