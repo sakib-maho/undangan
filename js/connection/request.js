@@ -12,6 +12,40 @@ export const HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
 export const ERROR_ABORT = 'AbortError';
 export const ERROR_TYPE = 'TypeError';
 
+// Request throttling to prevent database overload
+const requestQueue = [];
+let activeRequests = 0;
+const MAX_CONCURRENT_REQUESTS = 3;
+const REQUEST_DELAY_MS = 200; // Minimum delay between requests
+
+const processQueue = () => {
+    if (activeRequests >= MAX_CONCURRENT_REQUESTS || requestQueue.length === 0) {
+        return;
+    }
+
+    const { resolve, reject, fn } = requestQueue.shift();
+    activeRequests++;
+
+    fn()
+        .then((result) => {
+            activeRequests--;
+            resolve(result);
+            setTimeout(processQueue, REQUEST_DELAY_MS);
+        })
+        .catch((error) => {
+            activeRequests--;
+            reject(error);
+            setTimeout(processQueue, REQUEST_DELAY_MS);
+        });
+};
+
+const throttleRequest = (fn) => {
+    return new Promise((resolve, reject) => {
+        requestQueue.push({ resolve, reject, fn });
+        processQueue();
+    });
+};
+
 export const defaultJSON = {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
@@ -186,7 +220,7 @@ export const request = (method, path) => {
             /**
              * @returns {Promise<Response>}
              */
-            const wrapperFetch = () => window.fetch(input, req).then(async (res) => {
+            const wrapperFetch = () => throttleRequest(() => window.fetch(input, req)).then(async (res) => {
                 if (reqNoBody) {
                     ac.abort();
                     return new Response(null, {

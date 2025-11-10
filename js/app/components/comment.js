@@ -105,8 +105,17 @@ export const comment = (() => {
      * @returns {Promise<void>}
      */
     const fetchTracker = async (c) => {
+        if (!session.isAdmin()) {
+            return;
+        }
+
+        // Process nested comments first
         if (c.comments) {
-            await Promise.all(c.comments.map((v) => fetchTracker(v)));
+            for (const comment of c.comments) {
+                await fetchTracker(comment);
+                // Add delay between nested comment IP lookups
+                await new Promise(resolve => setTimeout(resolve, 200));
+            }
         }
 
         if (!c.ip || !c.user_agent || c.is_admin) {
@@ -119,29 +128,45 @@ export const comment = (() => {
          */
         const setResult = (result) => {
             const commentIp = document.getElementById(`ip-${util.escapeHtml(c.uuid)}`);
-            util.safeInnerHTML(commentIp, `<i class="fa-solid fa-location-dot me-1"></i>${util.escapeHtml(c.ip)} <strong>${util.escapeHtml(result)}</strong>`);
+            if (commentIp) {
+                util.safeInnerHTML(commentIp, `<i class="fa-solid fa-location-dot me-1"></i>${util.escapeHtml(c.ip)} <strong>${util.escapeHtml(result)}</strong>`);
+            }
         };
 
-        // Free for commercial and non-commercial use.
-        await request(HTTP_GET, `https://apip.cc/api-json/${c.ip}`)
-            .withCache(1000 * 60 * 60 * 24)
-            .withRetry()
-            .default()
-            .then((res) => res.json())
-            .then((res) => {
-                let result = 'localhost';
+        // Skip IP lookup if rate limited - use cached data only
+        try {
+            // Free for commercial and non-commercial use.
+            await request(HTTP_GET, `https://apip.cc/api-json/${c.ip}`)
+                .withCache(1000 * 60 * 60 * 24)
+                .withRetry(1, 500)
+                .default()
+                .then((res) => res.json())
+                .then((res) => {
+                    let result = 'localhost';
 
-                if (res.status === 'success') {
-                    if (res.City.length !== 0 && res.RegionName.length !== 0) {
-                        result = res.City + ' - ' + res.RegionName;
-                    } else if (res.Capital.length !== 0 && res.CountryName.length !== 0) {
-                        result = res.Capital + ' - ' + res.CountryName;
+                    if (res.status === 'success') {
+                        if (res.City.length !== 0 && res.RegionName.length !== 0) {
+                            result = res.City + ' - ' + res.RegionName;
+                        } else if (res.Capital.length !== 0 && res.CountryName.length !== 0) {
+                            result = res.Capital + ' - ' + res.CountryName;
+                        }
                     }
-                }
 
-                setResult(result);
-            })
-            .catch((err) => setResult(err.message));
+                    setResult(result);
+                })
+                .catch((err) => {
+                    // On rate limit or error, skip IP lookup to prevent further API calls
+                    if (err.status === 429 || err.code === 429) {
+                        console.warn('Skipping IP lookup due to rate limit');
+                        setResult('Location unavailable');
+                    } else {
+                        setResult(err.message);
+                    }
+                });
+        } catch (err) {
+            // Silently fail - don't block comment rendering
+            console.warn('IP lookup failed:', err);
+        }
     };
 
     /**
@@ -300,7 +325,14 @@ export const comment = (() => {
                 comments.dispatchEvent(new Event('undangan.comment.result'));
 
                 if (res.data.lists && session.isAdmin()) {
-                    await Promise.all(res.data.lists.map((v) => fetchTracker(v)));
+                    // Batch IP lookups with delay to prevent overwhelming the API
+                    for (let i = 0; i < res.data.lists.length; i++) {
+                        await fetchTracker(res.data.lists[i]);
+                        // Add small delay between IP lookups to prevent rate limiting
+                        if (i < res.data.lists.length - 1) {
+                            await new Promise(resolve => setTimeout(resolve, 300));
+                        }
+                    }
                 }
 
                 pagination.setTotal(res.data.count);
