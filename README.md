@@ -2,10 +2,10 @@
 
 ![Thumbnail](/assets/images/banner.webp)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/cef32dbf-f26f-4865-84a9-b85a439c9994/deploy-status)](https://app.netlify.com/sites/ulems/deploys)
-[![Hits](https://dikit.my.id/0b3y8q)](https://cie.my.id)
-[![GitHub repo size](https://img.shields.io/github/repo-size/dewanakl/undangan?color=brightgreen)](https://shields.io)
-[![GitHub License](https://img.shields.io/github/license/dewanakl/undangan?color=brightgreen)](https://shields.io)
+[![GitHub repo size](https://img.shields.io/github/repo-size/sakib-maho/undangan?color=brightgreen)](https://github.com/sakib-maho/undangan)
+[![GitHub License](https://img.shields.io/github/license/sakib-maho/undangan?color=brightgreen)](https://github.com/sakib-maho/undangan/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/sakib-maho/undangan?style=social)](https://github.com/sakib-maho/undangan)
+[![GitHub forks](https://img.shields.io/github/forks/sakib-maho/undangan?style=social)](https://github.com/sakib-maho/undangan)
 
 ## 🚀 Demo
 Untuk kamu yang ingin melihat demo terlebih dahulu:
