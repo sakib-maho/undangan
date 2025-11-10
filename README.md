@@ -1,70 +1,331 @@
-# 💌 Template website undangan pernikahan sederhana
+# 💌 Wedding Invitation Website Template
 
-![Thumbnail](/assets/images/banner.webp)
+A beautiful, modern, and fully customizable wedding invitation website template with comment features, guest management, and elegant design.
 
 [![GitHub repo size](https://img.shields.io/github/repo-size/sakib-maho/undangan?color=brightgreen)](https://github.com/sakib-maho/undangan)
 [![GitHub License](https://img.shields.io/github/license/sakib-maho/undangan?color=brightgreen)](https://github.com/sakib-maho/undangan/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/sakib-maho/undangan?style=social)](https://github.com/sakib-maho/undangan)
 [![GitHub forks](https://img.shields.io/github/forks/sakib-maho/undangan?style=social)](https://github.com/sakib-maho/undangan)
 
-## 🚀 Demo
-Untuk kamu yang ingin melihat demo terlebih dahulu:
+## ✨ Features
 
-[https://ulems.my.id/?to=Teman teman semua](https://ulems.my.id/?to=Teman%20teman%20semua)
+### 🎨 Design & User Experience
+- **Responsive Design** - Works perfectly on desktop, tablet, and mobile devices
+- **Dark/Light Theme** - Automatic theme switching based on system preferences
+- **Smooth Animations** - Beautiful fade-in, slide-in, and scale animations
+- **Loading Skeletons** - Modern loading states for better UX
+- **Progressive Image Loading** - Optimized image loading with shimmer effects
+- **Accessibility** - WCAG compliant with keyboard navigation and screen reader support
 
-## 📦 Documentation
+### 💬 Interactive Features
+- **Guest Comments** - Allow guests to leave messages and well-wishes
+- **Presence Confirmation** - Guests can confirm their attendance
+- **Like System** - Instagram-style like functionality for comments
+- **GIF Support** - Add GIFs to comments using Tenor API
+- **Reply System** - Nested comment replies
+- **Edit/Delete** - Guests can edit or delete their own comments
 
-* Jalankan perintah `npm install`, lalu `npm run dev`, dan buka `http://localhost:8080`.
-* Ubah isi file `index.html` sesuai keinginanmu.
-* Jika tidak ingin menggunakan **fitur komentar**, hapus atribut `data-url` dan `data-key` di elemen `<body>` pada index.html.
-* Sesuaikan `data-url` pada `<body>` di index dan dashboard sesuai dengan URL backend (jika kamu meng-hosting sendiri).
-* Sesuaikan juga `data-key` di index dengan access key yang bisa kamu ambil dari dashboard.
-* Jika ingin menggunakan GIF, dapatkan Tenor API key di [developers.google.com/tenor](https://developers.google.com/tenor/guides/quickstart).
-* Untuk deployment, jalankan `npm run build:public`. Folder `public` adalah yang akan kamu upload.
-* Untuk backend self-hosting, lihat penjelasan di bawah, atau gunakan **trial API** secara gratis.
+### 📊 Admin Dashboard
+- **Statistics Dashboard** - View comments, likes, and attendance statistics
+- **Comment Management** - Moderate and manage guest comments
+- **Settings Configuration** - Customize features and permissions
+- **Access Key Management** - Generate and manage guest access keys
+- **Data Export** - Download comments as CSV file
 
-> Undangan ini hanya menggunakan HTML, CSS, dan JavaScript biasa. NPM digunakan agar file JavaScript bisa langsung dieksekusi (bukan bertipe module lagi).
+### 🎵 Media Features
+- **Background Music** - Optional background music player
+- **Image Gallery** - Beautiful carousel gallery
+- **Video Support** - Embed love story videos
+- **Image Modal** - Full-screen image viewer
 
-> Jika tetap ingin tanpa NPM, ubah `src="./dist/guest.js"` menjadi `src="./js/guest.js" type="module"` pada tag `<head>` di index dan dashboard.html, dengan risiko glitch tema di awal loading.
+## 🚀 Quick Start
 
-> Jika kamu punya pertanyaan, gunakan fitur `discussions` agar bisa dibaca juga oleh teman-teman lainnya.
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
 
-> [!WARNING]  
-> Gunakan versi 3.14.0, untuk versi 4 masih tahap pengembangan dan berpotensi teredapat bug 🐛
+### Installation
 
-## 🔥 Deployment API
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/sakib-maho/undangan.git
+   cd undangan
+   ```
 
-- Video\
-    otw
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-- Presentation
-    [https://docs.google.com/presentation](https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit)
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
 
-## ⏰ Trial API
-Untuk kamu yang ingin mencoba secara gratis:
+4. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
 
-[https://trial.ulems.my.id](https://trial.ulems.my.id)
+## ⚙️ Configuration
 
-## ⚙️ Tech stack
+### Basic Setup
 
-- Bootstrap 5.3.8
-- AOS 2.3.4
-- Fontawesome 7.1.0
-- Canvas Confetti 1.9.3
-- Google Fonts
-- Vanilla JS
+1. **Edit `index.html`**
+   - Update couple names, dates, and personal information
+   - Replace placeholder images with your own
+   - Customize wedding details
 
-## 🎨 Credit
-All visual assets in this project are sourced from Pixabay.
+2. **Configure API (for comments)**
+   
+   In `index.html`, update the `<body>` tag:
+   ```html
+   <body 
+     data-key="YOUR_ACCESS_KEY" 
+     data-url="YOUR_API_URL" 
+     data-audio="./assets/music/your-music.mp3" 
+     data-confetti="true" 
+     data-time="2024-01-01 09:30:00">
+   ```
+
+   In `dashboard.html`:
+   ```html
+   <body data-url="YOUR_API_URL">
+   ```
+
+### API Setup Options
+
+#### Option 1: Free Trial API (Recommended for Quick Start)
+1. Sign up at [https://trial.ulems.my.id](https://trial.ulems.my.id)
+2. Get your API URL and Access Key
+3. Update the `data-url` and `data-key` attributes
+
+#### Option 2: Self-Hosted Backend
+- Set up your own backend API
+- Configure database (PostgreSQL, MySQL, MongoDB, etc.)
+- Deploy backend service
+- Update API URLs in HTML files
+
+#### Option 3: Without Comments
+- Remove `data-key` and `data-url` attributes from `index.html`
+- Website works completely offline
+
+### Optional Features
+
+**Tenor GIF Support:**
+1. Get API key from [Tenor Developers](https://developers.google.com/tenor/guides/quickstart)
+2. Login to dashboard
+3. Go to Settings → Tenor Key
+4. Enter your API key and save
+
+**Background Music:**
+- Place your music file in `assets/music/`
+- Update `data-audio` attribute in `index.html`
+
+## 📦 Build for Production
+
+```bash
+npm run build:public
+```
+
+This creates a `public` folder with optimized files ready for deployment.
+
+## 🌐 Deployment
+
+### Netlify (Recommended)
+1. Build the project: `npm run build:public`
+2. Drag and drop the `public` folder to [Netlify](https://app.netlify.com)
+3. Your site is live!
+
+### Vercel
+1. Connect your GitHub repository
+2. Set build command: `npm run build:public`
+3. Set output directory: `public`
+4. Deploy!
+
+### GitHub Pages
+1. Build the project: `npm run build:public`
+2. Push `public` folder to `gh-pages` branch
+3. Enable GitHub Pages in repository settings
+
+### Other Hosting
+Upload the `public` folder contents to any static hosting service.
+
+## 🎨 Customization
+
+### Colors & Themes
+Edit `css/customization.css` to customize:
+- Primary colors
+- Font sizes
+- Spacing
+- Border radius
+- Shadows
+
+### Animations
+Use animation classes from `css/animation.css`:
+```html
+<div class="animate-fade-in-up animate-delay-2">
+  Your content
+</div>
+```
+
+### Fonts
+- Default: Josefin Sans
+- Decorative: Sacramento
+- Arabic: Noto Naskh Arabic
+
+Change fonts in `index.html` head section.
+
+## 📱 Features Breakdown
+
+### Guest Page (`index.html`)
+- Welcome screen with loading animation
+- Home section with couple introduction
+- Bride & Groom section
+- Quranic verses section
+- Love story timeline
+- Wedding date with countdown timer
+- Image gallery
+- Love gift section (bank transfer, QRIS, physical gifts)
+- Comments section
+- Bottom navigation
+
+### Admin Dashboard (`dashboard.html`)
+- Statistics overview
+- Comment management
+- User settings
+- Access key management
+- Feature toggles
+- Password change
+
+## 🛠️ Tech Stack
+
+- **Frontend Framework**: Vanilla JavaScript (ES6+)
+- **CSS Framework**: Bootstrap 5.3.8
+- **Animations**: AOS 2.3.4, Custom CSS animations
+- **Icons**: Font Awesome 7.1.0
+- **Effects**: Canvas Confetti 1.9.3
+- **Fonts**: Google Fonts (Josefin Sans, Sacramento, Noto Naskh Arabic)
+- **Build Tool**: esbuild
+- **Package Manager**: npm
+
+## 🎯 Design Improvements
+
+This template includes enhanced design features:
+
+- ✅ **Animation Variants** - Fade, slide, scale animations
+- ✅ **Accessibility** - WCAG compliant, keyboard navigation
+- ✅ **Loading Skeletons** - Modern shimmer loading states
+- ✅ **Image Optimization** - Progressive loading with blur-up effect
+- ✅ **Customization Options** - CSS variables for easy theming
+
+See [DESIGN_IMPROVEMENTS.md](./DESIGN_IMPROVEMENTS.md) for detailed documentation.
+
+## 📝 Project Structure
+
+```
+undangan/
+├── assets/
+│   ├── images/          # Images (banner, photos, icons)
+│   ├── music/           # Background music files
+│   └── video/           # Video files
+├── css/
+│   ├── admin.css        # Admin dashboard styles
+│   ├── animation.css    # Animation keyframes and classes
+│   ├── common.css       # Shared styles and utilities
+│   ├── customization.css # Customization variables
+│   └── guest.css        # Guest page styles
+├── js/
+│   ├── app/
+│   │   ├── admin/       # Admin functionality
+│   │   ├── components/   # Reusable components
+│   │   └── guest/        # Guest page functionality
+│   ├── common/           # Shared utilities
+│   ├── connection/       # API connection layer
+│   └── libs/             # Third-party libraries
+├── index.html            # Main guest page
+├── dashboard.html         # Admin dashboard
+├── package.json
+└── README.md
+```
+
+## 🔧 Development
+
+### Available Scripts
+
+```bash
+# Development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Build public folder
+npm run build:public
+
+# Lint JavaScript
+npm run lint:js
+
+# Lint CSS
+npm run lint:css
+
+# Lint HTML
+npm run lint:html
+```
+
+### Code Style
+- ESLint for JavaScript
+- Stylelint for CSS
+- HTMLHint for HTML
+
+## 📚 API Endpoints
+
+If using your own backend, implement these endpoints:
+
+- `POST /api/session` - User authentication
+- `GET /api/user` - Get user details
+- `PATCH /api/user` - Update user settings
+- `GET /api/v2/config` - Get public configuration
+- `GET /api/v2/comment` - List comments
+- `POST /api/comment` - Create comment
+- `PUT /api/comment/{uuid}` - Update comment
+- `DELETE /api/comment/{uuid}` - Delete comment
+- `POST /api/comment/{uuid}` - Like comment
+- `PATCH /api/comment/{uuid}` - Unlike comment
+- `GET /api/stats` - Get statistics
+- `PUT /api/key` - Regenerate access key
+- `GET /api/download` - Download comments CSV
 
 ## 🤝 Contributing
 
-I'm very open to those of you who want to contribute to the undangan!
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 🐞 Security Vulnerabilities
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-If you find any security vulnerabilities in this undangan, please email DKL via [dewanakretarta29@gmail.com](mailto:dewanakretarta29@gmail.com).
+## 📄 License
 
-## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-Undangan is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🙏 Acknowledgments
+
+- Original template by [dewanakl](https://github.com/dewanakl/undangan)
+- Visual assets from [Pixabay](https://pixabay.com)
+- Music from [Pixabay Music](https://pixabay.com/music)
+
+## 📞 Support
+
+For questions, issues, or contributions:
+- Open an issue on [GitHub](https://github.com/sakib-maho/undangan/issues)
+- Check existing discussions
+
+## ⭐ Show Your Support
+
+If you find this project helpful, please give it a star! ⭐
+
+---
+
+**Made with ❤️ for your special day**
