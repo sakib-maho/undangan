@@ -163,8 +163,60 @@ export const guest = (() => {
      */
     const open = (button) => {
         button.disabled = true;
+        
+        // Hide welcome page
+        util.changeOpacity(document.getElementById('welcome'), false).then((el) => el.remove());
+        
+        // Show GIF first, then show next page after GIF disappears
+        const jinniOverlay = document.getElementById('jinni-overlay');
+        const root = document.getElementById('root');
+        
+        if (jinniOverlay) {
+            // Keep root page hidden initially
+            root.classList.add('opacity-0');
+            root.style.opacity = '0';
+            
+            // Show GIF overlay immediately
+            jinniOverlay.style.display = 'flex';
+            jinniOverlay.style.opacity = '0';
+            jinniOverlay.style.transition = 'opacity 1.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            
+            // Fade in jinni smoothly
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    jinniOverlay.style.opacity = '1';
+                });
+            });
+            
+            // After 3 seconds, hide GIF and show next page
+            setTimeout(() => {
+                // Start fading in root page slightly before GIF fades out for smoother transition
+                root.classList.remove('opacity-0');
+                root.style.opacity = '0';
+                root.style.transition = 'opacity 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                root.classList.add('fade-in');
+                
+                // Smooth fade-in with requestAnimationFrame
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        root.style.opacity = '1';
+                    });
+                });
+                
+                // Fade out GIF with smooth transition (slower for smoother effect)
+                jinniOverlay.style.transition = 'opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                jinniOverlay.style.opacity = '0';
+                
+                setTimeout(() => {
+                    jinniOverlay.style.display = 'none';
+                }, 1200);
+            }, 3000); // Show GIF for 3 seconds
+        } else {
+            // Fallback if GIF not found
+            root.classList.remove('opacity-0');
+        }
+
         document.body.scrollIntoView({ behavior: 'instant' });
-        document.getElementById('root').classList.remove('opacity-0');
 
         if (theme.isAutoMode()) {
             document.getElementById('button-theme').classList.remove('d-none');
@@ -177,7 +229,6 @@ export const guest = (() => {
         util.timeOut(confetti.openAnimation, 1500);
 
         document.dispatchEvent(new Event('undangan.open'));
-        util.changeOpacity(document.getElementById('welcome'), false).then((el) => el.remove());
     };
 
     /**
