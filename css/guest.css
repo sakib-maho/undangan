@@ -79,6 +79,55 @@ html[data-bs-theme="light"] .btn-transparent {
     will-change: auto;
 }
 
+/* Welcome Page GIF Background */
+.welcome-gif-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.4;
+    pointer-events: none;
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Aladdin & Jasmine GIF Styling */
+.welcome-aladdin-gif {
+    position: absolute;
+    bottom: 52%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    height: 40vh;
+    max-width: 90%;
+    z-index: 0;
+    opacity: 0.9;
+    pointer-events: none;
+    transition: none !important;
+    animation: none !important;
+    object-fit: contain;
+}
+
+/* Responsive sizing for Aladdin GIF */
+@media (max-width: 768px) {
+    .welcome-aladdin-gif {
+        height: 35vh;
+        max-width: 85%;
+        bottom: 48%;
+    }
+}
+
+@media (max-width: 576px) {
+    .welcome-aladdin-gif {
+        height: 30vh;
+        max-width: 80%;
+        bottom: 43%;
+    }
+}
+
 html[data-bs-theme="light"] .color-theme-svg {
     color: rgb(255, 255, 255);
     background-color: var(--bs-light);
