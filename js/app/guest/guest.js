@@ -172,9 +172,18 @@ export const guest = (() => {
         const root = document.getElementById('root');
         
         if (jinniOverlay) {
-            // Keep root page hidden initially
-            root.classList.add('opacity-0');
+            // Show root page immediately so it's visible behind the GIF
+            root.classList.remove('opacity-0');
             root.style.opacity = '0';
+            root.style.transition = 'opacity 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            root.classList.add('fade-in');
+            
+            // Smooth fade-in with requestAnimationFrame
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    root.style.opacity = '1';
+                });
+            });
             
             // Show GIF overlay immediately
             jinniOverlay.style.display = 'flex';
@@ -188,22 +197,9 @@ export const guest = (() => {
                 });
             });
             
-            // After 3 seconds, hide GIF and show next page
+            // After 3 seconds, fade out GIF overlay
             setTimeout(() => {
-                // Start fading in root page slightly before GIF fades out for smoother transition
-                root.classList.remove('opacity-0');
-                root.style.opacity = '0';
-                root.style.transition = 'opacity 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                root.classList.add('fade-in');
-                
-                // Smooth fade-in with requestAnimationFrame
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        root.style.opacity = '1';
-                    });
-                });
-                
-                // Fade out GIF with smooth transition (slower for smoother effect)
+                // Fade out GIF overlay
                 jinniOverlay.style.transition = 'opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                 jinniOverlay.style.opacity = '0';
                 
