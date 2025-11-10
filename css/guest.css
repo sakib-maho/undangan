@@ -347,11 +347,13 @@ html[data-bs-theme="dark"] .bg-white-black {
     pointer-events: auto !important;
 }
 
-.jinni-overlay img {
+.jinni-overlay img,
+.jinni-overlay video {
     pointer-events: auto;
 }
 
-.jinni-gif {
+.jinni-gif,
+.jinni-gif video {
     width: 100vw !important;
     height: 104vh !important;
     max-width: 100vw !important;
