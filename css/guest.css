@@ -53,6 +53,32 @@ html[data-bs-theme="light"] .btn-transparent {
     z-index: 1056;
 }
 
+/* Welcome Page Video Background */
+.welcome-video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0.3;
+    transition: none !important;
+    animation: none !important;
+}
+
+.welcome-video-bg video {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Ensure video plays smoothly without transitions */
+#welcome video {
+    transition: none !important;
+    animation: none !important;
+    will-change: auto;
+}
+
 html[data-bs-theme="light"] .color-theme-svg {
     color: rgb(255, 255, 255);
     background-color: var(--bs-light);
