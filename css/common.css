@@ -62,6 +62,11 @@ html[data-bs-theme="light"] .bg-theme-auto {
     background-color: var(--bs-gray-100);
 }
 
+/* Button Focus States - must come before theme-specific selectors */
+.btn-outline-auto:focus-visible {
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-light-rgb), 0.5);
+}
+
 html[data-bs-theme="dark"] .btn-outline-auto {
     --bs-btn-color: var(--bs-light);
     --bs-btn-border-color: var(--bs-light);
@@ -165,10 +170,6 @@ textarea:focus-visible {
     box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.5);
 }
 
-.btn-outline-auto:focus-visible {
-    box-shadow: 0 0 0 0.25rem rgba(var(--bs-light-rgb), 0.5);
-}
-
 html[data-bs-theme="light"] .btn-outline-auto:focus-visible {
     box-shadow: 0 0 0 0.25rem rgba(var(--bs-dark-rgb), 0.5);
 }
@@ -183,7 +184,7 @@ html[data-bs-theme="light"] .text-muted {
 }
 
 /* High Contrast Mode Support */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
     * {
         border-width: 2px !important;
     }
