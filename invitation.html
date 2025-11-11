@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Wedding Invitation - Sakib & Shabrina</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-2FMn2Zx6PuH5tdBQDRNwrOo60ts5wWPC9R8jK67b3t4=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css" integrity="sha256-4rTIfo5GQTi/7UJqoyUJQKzxW8VN/YBH31+Cy+vTZj4=" crossorigin="anonymous">
+    
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Josefin Sans', sans-serif;
+            padding: 1rem;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .invitation-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        @media (max-width: 576px) {
+            .invitation-card {
+                padding: 1.5rem;
+            }
+        }
+        .invitation-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 576px) {
+            .invitation-title {
+                font-size: 1.5rem;
+            }
+        }
+        .invitation-message {
+            font-size: 1.1rem;
+            color: #666;
+            margin: 2rem 0;
+            line-height: 1.8;
+        }
+        @media (max-width: 576px) {
+            .invitation-message {
+                font-size: 1rem;
+                margin: 1.5rem 0;
+            }
+        }
+        .invitation-name {
+            color: #667eea;
+            font-weight: bold;
+        }
+        .join-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+            margin-top: 2rem;
+            min-height: 48px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            width: auto;
+            display: inline-block;
+        }
+        .join-button:active {
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+        .join-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        @media (max-width: 576px) {
+            .join-button {
+                padding: 0.9rem 2rem;
+                font-size: 1rem;
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        .join-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .heart-icon {
+            color: #ff6b9d;
+            font-size: 3rem;
+            margin: 1rem 0;
+            animation: pulse 2s infinite;
+        }
+        @media (max-width: 576px) {
+            .heart-icon {
+                font-size: 2.5rem;
+            }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .loading {
+            display: none;
+            margin-top: 2rem;
+        }
+        .loading.show {
+            display: block;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        .error-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-card">
+        <div class="heart-icon">
+            <i class="fas fa-heart"></i>
+        </div>
+        <h1 class="invitation-title">Sakib & Shabrina</h1>
+        <p class="invitation-message">
+            Inviting <span class="invitation-name" id="invitation-name">...</span> to join our event
+        </p>
+        <button class="join-button" id="join-button" type="button">
+            <i class="fas fa-heart me-2"></i>Please Join Invitation
+        </button>
+        <div class="loading" id="loading">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="error-message" id="error-message"></div>
+    </div>
+
+    <script>
+        // Backend API URL - Update this to your backend server URL
+        const API_BASE_URL = 'http://ec2-35-72-159-128.ap-northeast-1.compute.amazonaws.com:3001';
+        const FRONTEND_URL = 'https://sakib-maho.github.io/undangan';
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        
+        const invitationNameEl = document.getElementById('invitation-name');
+        const joinButton = document.getElementById('join-button');
+        const loadingEl = document.getElementById('loading');
+        const errorMessageEl = document.getElementById('error-message');
+        
+        // Helper function to create fetch with timeout
+        function fetchWithTimeout(url, options = {}, timeout = 10000) {
+            return Promise.race([
+                fetch(url, options),
+                new Promise((_, reject) =>
+                    setTimeout(() => reject(new Error('Request timeout')), timeout)
+                )
+            ]);
+        }
+        
+        // Fetch invitation details with timeout and better error handling
+        if (token) {
+            // Show loading state
+            invitationNameEl.textContent = 'Loading...';
+            
+            fetchWithTimeout(`${API_BASE_URL}/api/invitations/${token}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }, 10000)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error(`HTTP ${res.status}: Failed to fetch invitation`);
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data && data.data && data.data.name) {
+                        invitationNameEl.textContent = data.data.name;
+                    } else {
+                        invitationNameEl.textContent = 'Guest';
+                    }
+                    errorMessageEl.classList.remove('show');
+                })
+                .catch(err => {
+                    console.error('Error fetching invitation:', err);
+                    // Still allow the page to work even if fetch fails
+                    invitationNameEl.textContent = 'Guest';
+                    // Show error but don't block functionality
+                    if (err.message && err.message.includes('timeout')) {
+                        errorMessageEl.textContent = 'Connection timeout. You can still proceed.';
+                    } else {
+                        errorMessageEl.textContent = 'Could not load invitation details. You can still proceed.';
+                    }
+                    errorMessageEl.classList.add('show');
+                });
+        } else {
+            invitationNameEl.textContent = 'Guest';
+        }
+
+        // Add event listener for button click (works better on mobile than onclick)
+        joinButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Prevent double-click
+            if (joinButton.disabled) {
+                return;
+            }
+            
+            joinButton.disabled = true;
+            joinButton.style.display = 'none';
+            loadingEl.classList.add('show');
+            
+            const name = invitationNameEl.textContent;
+            
+            if (token) {
+                // Mark invitation as used with timeout
+                fetchWithTimeout(`${API_BASE_URL}/api/invitations/${token}/use`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }, 10000)
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error('Failed to mark invitation as used');
+                    }
+                    return res.json();
+                })
+                .then(() => {
+                    // Redirect to main page with invitation name
+                    window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(name)}`;
+                })
+                .catch(err => {
+                    console.error('Error using invitation:', err);
+                    // Still redirect even if marking as used fails
+                    // Use setTimeout to ensure redirect happens
+                    setTimeout(() => {
+                        window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(name)}`;
+                    }, 100);
+                });
+            } else {
+                // No token, just redirect
+                setTimeout(() => {
+                    window.location.href = FRONTEND_URL;
+                }, 100);
+            }
+        });
+        
+        // Also support touch events for better mobile compatibility
+        joinButton.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!joinButton.disabled) {
+                joinButton.click();
+            }
+        });
+        
+        // Ensure button is always clickable even if name hasn't loaded
+        // Enable button after a short delay to ensure it's ready
+        setTimeout(() => {
+            if (invitationNameEl.textContent === '...' || invitationNameEl.textContent === 'Loading...') {
+                invitationNameEl.textContent = 'Guest';
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
+
