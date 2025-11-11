@@ -167,6 +167,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
         const name = urlParams.get('name'); // Get name directly from URL
+        const prefix = urlParams.get('prefix'); // Get prefix directly from URL
         const title = urlParams.get('title'); // Get title directly from URL
         
         const invitationNameEl = document.getElementById('invitation-name');
@@ -187,7 +188,8 @@
             invitationNameEl.textContent = 'Guest';
         }
         
-        // Store title for redirect
+        // Store prefix and title for redirect
+        const invitationPrefix = prefix ? decodeURIComponent(prefix) : 'To';
         const invitationTitle = title ? decodeURIComponent(title) : 'Mr./Mrs./Brother/Sister';
         
         // Helper function to create fetch with timeout
@@ -252,8 +254,9 @@
             
             // Redirect immediately (don't wait for API call)
             setTimeout(() => {
-                window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(guestName)}&title=${encodeURIComponent(invitationTitle)}`;
+                window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(guestName)}&prefix=${encodeURIComponent(invitationPrefix)}&title=${encodeURIComponent(invitationTitle)}`;
             }, 100);
+        });
         
         // Mark invitation as used asynchronously (non-blocking)
         async function markInvitationUsedAsync(token) {
@@ -279,7 +282,6 @@
                 console.log('Could not mark invitation as used (non-critical)');
             }
         }
-        });
         
         // Also support touch events for better mobile compatibility
         joinButton.addEventListener('touchend', function(e) {
