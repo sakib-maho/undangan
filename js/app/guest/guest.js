@@ -87,18 +87,28 @@ export const guest = (() => {
             const div = document.createElement('div');
             div.classList.add('m-2');
 
+            // Check if title is empty or default placeholder
+            const isEmptyTitle = !title || title.trim() === '' || title === 'Mr./Mrs./Brother/Sister';
+
             // Build title text: prefix + title (e.g., "To Mr.", "Dear Sister")
+            // If title is empty, only show prefix
             let titleText = '';
-            if (prefix && title) {
-                titleText = `${prefix} ${title}`;
-            } else if (prefix) {
-                titleText = prefix;
-            } else if (title) {
-                // Default prefix is "To" if only title is provided
-                titleText = `To ${title}`;
+            if (isEmptyTitle) {
+                // Only prefix, no title
+                if (prefix) {
+                    titleText = prefix;
+                } else {
+                    // Default to "To" if no prefix and no title
+                    titleText = 'To';
+                }
             } else {
-                // Fallback to data-message attribute or default
-                titleText = guestName?.getAttribute('data-message') || 'To Mr./Mrs./Brother/Sister';
+                // Both prefix and title
+                if (prefix) {
+                    titleText = `${prefix} ${title}`;
+                } else {
+                    // Default prefix is "To" if only title is provided
+                    titleText = `To ${title}`;
+                }
             }
             
             // Update data-message attribute if prefix or title is provided
