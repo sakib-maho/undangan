@@ -57,20 +57,16 @@ jobs:
       - name: Install npm
         run: npm install -g npm
 
-      - name: Check if NETLIFY_AUTH_TOKEN is set
-        run: |
-          if [ -z "${{ secrets.NETLIFY_AUTH_TOKEN }}" ]; then
-            echo "NETLIFY_AUTH_TOKEN is not set. Skipping deployment."
-            exit 0
-          fi
-
       - name: Install Netlify CLI
+        if: ${{ secrets.NETLIFY_AUTH_TOKEN != '' && secrets.NETLIFY_SITE_ID != '' }}
         run: npm install && npm install -g netlify-cli
 
       - name: Run Build
+        if: ${{ secrets.NETLIFY_AUTH_TOKEN != '' && secrets.NETLIFY_SITE_ID != '' }}
         run: npm run build
 
       - name: Add netlify.toml File for Headers
+        if: ${{ secrets.NETLIFY_AUTH_TOKEN != '' && secrets.NETLIFY_SITE_ID != '' }}
         run: |
           echo "[[headers]]" > netlify.toml
           echo "  for = \"/*\"" >> netlify.toml
@@ -81,6 +77,7 @@ jobs:
           echo "    Access-Control-Expose-Headers = \"*\"" >> netlify.toml
 
       - name: Deploy to Netlify
+        if: ${{ secrets.NETLIFY_AUTH_TOKEN != '' && secrets.NETLIFY_SITE_ID != '' }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
