@@ -318,7 +318,8 @@ export const admin = (() => {
         offline.init();
         theme.spyTop();
 
-        document.addEventListener('hidden.bs.modal', getUserStats);
+        // Removed auto-reload on modal close - user wants manual reload only
+        // document.addEventListener('hidden.bs.modal', getUserStats);
 
         const raw = window.location.hash.slice(1);
         if (raw.length > 0) {
