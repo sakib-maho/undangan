@@ -57,17 +57,25 @@ jobs:
       - name: Install npm
         run: npm install -g npm
 
-      - name: Install Netlify CLI
-        if: ${{ secrets.NETLIFY_AUTH_TOKEN != '' && secrets.NETLIFY_SITE_ID != '' }}
-        run: npm install && npm install -g netlify-cli
-
-      - name: Run Build
-        if: ${{ secrets.NETLIFY_AUTH_TOKEN != '' && secrets.NETLIFY_SITE_ID != '' }}
-        run: npm run build
-
-      - name: Add netlify.toml File for Headers
-        if: ${{ secrets.NETLIFY_AUTH_TOKEN != '' && secrets.NETLIFY_SITE_ID != '' }}
+      - name: Check Netlify secrets and deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
+          if [ -z "$NETLIFY_AUTH_TOKEN" ] || [ -z "$NETLIFY_SITE_ID" ]; then
+            echo "Netlify secrets are not set. Skipping Netlify deployment."
+            exit 0
+          fi
+          
+          echo "Netlify secrets are set. Proceeding with deployment..."
+          
+          # Install Netlify CLI
+          npm install && npm install -g netlify-cli
+          
+          # Run Build
+          npm run build
+          
+          # Add netlify.toml File for Headers
           echo "[[headers]]" > netlify.toml
           echo "  for = \"/*\"" >> netlify.toml
           echo "  [headers.values]" >> netlify.toml
@@ -75,10 +83,6 @@ jobs:
           echo "    Access-Control-Allow-Headers = \"*\"" >> netlify.toml
           echo "    Access-Control-Allow-Methods = \"*\"" >> netlify.toml
           echo "    Access-Control-Expose-Headers = \"*\"" >> netlify.toml
-
-      - name: Deploy to Netlify
-        if: ${{ secrets.NETLIFY_AUTH_TOKEN != '' && secrets.NETLIFY_SITE_ID != '' }}
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: netlify deploy --prod --telemetry-disable --dir=. --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
+          
+          # Deploy to Netlify
+          netlify deploy --prod --telemetry-disable --dir=. --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
