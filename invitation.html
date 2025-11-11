@@ -124,6 +124,8 @@
             overflow: visible;
             margin: 1rem;
             margin-top: 7rem;
+            backface-visibility: hidden;
+            will-change: transform;
         }
         /* Hide scrollbar for card if any */
         .invitation-card::-webkit-scrollbar {
@@ -219,6 +221,10 @@
             animation: fadeInUp 1s ease-out 0.4s both, shimmer 3s ease-in-out infinite;
             position: relative;
             z-index: 2;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            text-rendering: geometricPrecision;
+            will-change: text-shadow;
         }
         @media (max-width: 576px) {
             .invitation-subtitle {
@@ -235,6 +241,10 @@
             animation: fadeInUp 1s ease-out 0.6s both, glow 2s ease-in-out infinite;
             position: relative;
             z-index: 2;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            text-rendering: geometricPrecision;
+            will-change: text-shadow;
         }
         @media (max-width: 576px) {
             .invitation-title {
@@ -250,6 +260,9 @@
             animation: fadeInUp 1s ease-out 0.8s both;
             position: relative;
             z-index: 2;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            text-rendering: geometricPrecision;
         }
         @media (max-width: 576px) {
             .invitation-message {
@@ -285,6 +298,10 @@
             animation: fadeInUp 1s ease-out 1s both, buttonPulse 2.5s ease-in-out infinite;
             position: relative;
             z-index: 2;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            text-rendering: geometricPrecision;
+            will-change: box-shadow;
         }
         .join-button:active {
             transform: scale(0.95);
@@ -391,11 +408,11 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translate3d(0, 30px, 0);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translate3d(0, 0, 0);
             }
         }
         @keyframes fadeInDown {
@@ -410,10 +427,10 @@
         }
         @keyframes float {
             0%, 100% {
-                transform: translateY(0px);
+                transform: translate3d(0, 0, 0);
             }
             50% {
-                transform: translateY(-8px);
+                transform: translate3d(0, -8px, 0);
             }
         }
         @keyframes rotate {
@@ -439,7 +456,7 @@
                 text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.4);
             }
             50% {
-                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.6);
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.6), 0 0 35px rgba(212, 175, 55, 0.5);
             }
         }
         @keyframes glow {
@@ -447,7 +464,7 @@
                 text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.4);
             }
             50% {
-                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.7), 0 0 35px rgba(212, 175, 55, 0.5);
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 22px rgba(212, 175, 55, 0.5), 0 0 30px rgba(212, 175, 55, 0.4);
             }
         }
         @keyframes buttonPulse {
