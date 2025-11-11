@@ -190,7 +190,12 @@
         
         // Store prefix and title for redirect
         const invitationPrefix = prefix ? decodeURIComponent(prefix) : 'To';
-        const invitationTitle = title ? decodeURIComponent(title) : 'Mr./Mrs./Brother/Sister';
+        const invitationTitle = title ? decodeURIComponent(title) : '';
+        
+        // If title is empty or default placeholder, don't include it in URL
+        const titleParam = (invitationTitle && invitationTitle.trim() !== '' && invitationTitle !== 'Mr./Mrs./Brother/Sister') 
+            ? `&title=${encodeURIComponent(invitationTitle)}` 
+            : '';
         
         // Helper function to create fetch with timeout
         function fetchWithTimeout(url, options = {}, timeout = 10000) {
@@ -254,7 +259,8 @@
             
             // Redirect immediately (don't wait for API call)
             setTimeout(() => {
-                window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(guestName)}&prefix=${encodeURIComponent(invitationPrefix)}&title=${encodeURIComponent(invitationTitle)}`;
+                const urlParams = `?to=${encodeURIComponent(guestName)}&prefix=${encodeURIComponent(invitationPrefix)}${titleParam}`;
+                window.location.href = `${FRONTEND_URL}/${urlParams}`;
             }, 100);
         });
         
