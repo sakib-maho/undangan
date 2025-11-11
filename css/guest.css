@@ -359,8 +359,7 @@ html[data-bs-theme="dark"] .bg-white-black {
     pointer-events: auto;
 }
 
-.jinni-gif,
-.jinni-gif video {
+.jinni-gif {
     width: 100vw !important;
     height: 104vh !important;
     max-width: 100vw !important;
