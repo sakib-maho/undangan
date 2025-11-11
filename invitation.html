@@ -166,11 +166,25 @@
         
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
+        const name = urlParams.get('name'); // Get name directly from URL
         
         const invitationNameEl = document.getElementById('invitation-name');
         const joinButton = document.getElementById('join-button');
         const loadingEl = document.getElementById('loading');
         const errorMessageEl = document.getElementById('error-message');
+        
+        // Set invitation name from URL parameter (no API call needed)
+        if (name) {
+            invitationNameEl.textContent = decodeURIComponent(name);
+            errorMessageEl.classList.remove('show');
+        } else if (token) {
+            // If no name in URL but token exists, try to fetch (but don't block if it fails)
+            invitationNameEl.textContent = 'Guest';
+            // Silently try to fetch name in background (non-blocking)
+            tryFetchName(token);
+        } else {
+            invitationNameEl.textContent = 'Guest';
+        }
         
         // Helper function to create fetch with timeout
         function fetchWithTimeout(url, options = {}, timeout = 10000) {
@@ -182,86 +196,32 @@
             ]);
         }
         
-        // Function to fetch invitation with CORS proxy fallback
-        async function fetchInvitation(token) {
-            const directUrl = `${API_BASE_URL}/api/invitations/${token}`;
+        // Optional: Try to fetch name from API in background (non-blocking)
+        async function tryFetchName(token) {
+            // Only try if we're not on HTTPS (to avoid mixed content issues)
+            if (window.location.protocol === 'https:') {
+                // Skip API call on HTTPS to avoid mixed content
+                return;
+            }
             
             try {
-                // Try direct fetch first
-                const res = await fetchWithTimeout(directUrl, {
+                const res = await fetchWithTimeout(`${API_BASE_URL}/api/invitations/${token}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    mode: 'cors'
-                }, 10000);
-                
-                if (!res.ok) {
-                    throw new Error(`HTTP ${res.status}: Failed to fetch invitation`);
-                }
-                
-                const data = await res.json();
-                return data;
-            } catch (err) {
-                console.error('Direct fetch failed:', err);
-                
-                // If direct fetch fails (likely due to mixed content), try using a proxy
-                // Using allorigins.win as a CORS proxy
-                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(directUrl)}`;
-                
-                try {
-                    const proxyRes = await fetchWithTimeout(proxyUrl, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    }, 15000);
-                    
-                    if (!proxyRes.ok) {
-                        throw new Error(`Proxy HTTP ${proxyRes.status}`);
                     }
-                    
-                    const data = await proxyRes.json();
-                    return data;
-                } catch (proxyErr) {
-                    console.error('Proxy fetch also failed:', proxyErr);
-                    throw err; // Throw original error
-                }
-            }
-        }
-        
-        // Fetch invitation details with timeout and better error handling
-        if (token) {
-            // Show loading state
-            invitationNameEl.textContent = 'Loading...';
-            
-            fetchInvitation(token)
-                .then(data => {
+                }, 5000);
+                
+                if (res.ok) {
+                    const data = await res.json();
                     if (data && data.data && data.data.name) {
                         invitationNameEl.textContent = data.data.name;
-                        errorMessageEl.classList.remove('show');
-                    } else {
-                        invitationNameEl.textContent = 'Guest';
-                        errorMessageEl.textContent = 'Invitation data format invalid. You can still proceed.';
-                        errorMessageEl.classList.add('show');
                     }
-                })
-                .catch(err => {
-                    console.error('Error fetching invitation:', err);
-                    // Still allow the page to work even if fetch fails
-                    invitationNameEl.textContent = 'Guest';
-                    // Show error but don't block functionality
-                    if (err.message && err.message.includes('timeout')) {
-                        errorMessageEl.textContent = 'Connection timeout. You can still proceed.';
-                    } else if (err.message && err.message.includes('Mixed Content') || err.message.includes('blocked')) {
-                        errorMessageEl.textContent = 'Security restriction detected. Please contact the administrator.';
-                    } else {
-                        errorMessageEl.textContent = 'Could not load invitation details. You can still proceed.';
-                    }
-                    errorMessageEl.classList.add('show');
-                });
-        } else {
-            invitationNameEl.textContent = 'Guest';
+                }
+            } catch (err) {
+                // Silently fail - name already set to 'Guest'
+                console.log('Could not fetch name from API (non-critical)');
+            }
         }
 
         // Add event listener for button click (works better on mobile than onclick)
@@ -278,73 +238,43 @@
             joinButton.style.display = 'none';
             loadingEl.classList.add('show');
             
-            const name = invitationNameEl.textContent;
+            const guestName = invitationNameEl.textContent;
             
+            // Try to mark invitation as used (non-blocking - redirect happens regardless)
             if (token) {
-                // Function to mark invitation as used with proxy fallback
-                async function markInvitationUsed(token) {
-                    const directUrl = `${API_BASE_URL}/api/invitations/${token}/use`;
-                    
-                    try {
-                        const res = await fetchWithTimeout(directUrl, {
-                            method: 'PATCH',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            mode: 'cors'
-                        }, 10000);
-                        
-                        if (!res.ok) {
-                            throw new Error('Failed to mark invitation as used');
-                        }
-                        
-                        return await res.json();
-                    } catch (err) {
-                        console.error('Direct mark as used failed:', err);
-                        
-                        // Try proxy as fallback
-                        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(directUrl)}`;
-                        
-                        try {
-                            const proxyRes = await fetchWithTimeout(proxyUrl, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                }
-                            }, 15000);
-                            
-                            if (!proxyRes.ok) {
-                                throw new Error('Proxy failed');
-                            }
-                            
-                            return await proxyRes.json();
-                        } catch (proxyErr) {
-                            console.error('Proxy mark as used also failed:', proxyErr);
-                            throw err;
-                        }
-                    }
-                }
-                
-                // Mark invitation as used with timeout and proxy fallback
-                markInvitationUsed(token)
-                .then(() => {
-                    // Redirect to main page with invitation name
-                    window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(name)}`;
-                })
-                .catch(err => {
-                    console.error('Error using invitation:', err);
-                    // Still redirect even if marking as used fails
-                    // Use setTimeout to ensure redirect happens
-                    setTimeout(() => {
-                        window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(name)}`;
-                    }, 100);
-                });
-            } else {
-                // No token, just redirect
-                setTimeout(() => {
-                    window.location.href = FRONTEND_URL;
-                }, 100);
+                // Try to mark as used in background, but don't wait for it
+                markInvitationUsedAsync(token);
             }
+            
+            // Redirect immediately (don't wait for API call)
+            setTimeout(() => {
+                window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(guestName)}`;
+            }, 100);
+        
+        // Mark invitation as used asynchronously (non-blocking)
+        async function markInvitationUsedAsync(token) {
+            // Only try if not on HTTPS (to avoid mixed content)
+            if (window.location.protocol === 'https:') {
+                // Skip API call on HTTPS to avoid mixed content
+                return;
+            }
+            
+            try {
+                const res = await fetchWithTimeout(`${API_BASE_URL}/api/invitations/${token}/use`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }, 5000);
+                
+                if (res.ok) {
+                    console.log('Invitation marked as used');
+                }
+            } catch (err) {
+                // Silently fail - redirect already happened
+                console.log('Could not mark invitation as used (non-critical)');
+            }
+        }
         });
         
         // Also support touch events for better mobile compatibility
