@@ -78,21 +78,31 @@ export const guest = (() => {
         const titleMatch = window.location.search.match(/[?&]title=([^&]+)/);
         const title = titleMatch ? window.decodeURIComponent(titleMatch[1]) : null;
 
+        // Get prefix from URL parameter
+        const prefixMatch = window.location.search.match(/[?&]prefix=([^&]+)/);
+        const prefix = prefixMatch ? window.decodeURIComponent(prefixMatch[1]) : null;
+
         if (name) {
             const guestName = document.getElementById('guest-name');
             const div = document.createElement('div');
             div.classList.add('m-2');
 
-            // Use title from URL if available, otherwise use data-message attribute
-            let titleText = title || guestName?.getAttribute('data-message') || 'To Mr./Mrs./Brother/Sister';
-            
-            // Ensure "To" prefix is added if not already present
-            if (titleText && !titleText.toLowerCase().startsWith('to ')) {
-                titleText = 'To ' + titleText;
+            // Build title text: prefix + title (e.g., "To Mr.", "Dear Sister")
+            let titleText = '';
+            if (prefix && title) {
+                titleText = `${prefix} ${title}`;
+            } else if (prefix) {
+                titleText = prefix;
+            } else if (title) {
+                // Default prefix is "To" if only title is provided
+                titleText = `To ${title}`;
+            } else {
+                // Fallback to data-message attribute or default
+                titleText = guestName?.getAttribute('data-message') || 'To Mr./Mrs./Brother/Sister';
             }
             
-            // Update data-message attribute if title is provided
-            if (title && guestName) {
+            // Update data-message attribute if prefix or title is provided
+            if ((prefix || title) && guestName) {
                 guestName.setAttribute('data-message', titleText);
             }
 
