@@ -76,7 +76,7 @@ export const guest = (() => {
 
         // Get title from URL parameter
         const titleMatch = window.location.search.match(/[?&]title=([^&]+)/);
-        let title = titleMatch ? window.decodeURIComponent(titleMatch[1]) : null;
+        const title = titleMatch ? window.decodeURIComponent(titleMatch[1]) : null;
 
         if (name) {
             const guestName = document.getElementById('guest-name');
