@@ -74,7 +74,7 @@ export const guest = (() => {
 
         // Get title from URL parameter
         const titleMatch = window.location.search.match(/[?&]title=([^&]+)/);
-        const title = titleMatch ? window.decodeURIComponent(titleMatch[1]) : null;
+        let title = titleMatch ? window.decodeURIComponent(titleMatch[1]) : null;
 
         if (name) {
             const guestName = document.getElementById('guest-name');
@@ -82,7 +82,12 @@ export const guest = (() => {
             div.classList.add('m-2');
 
             // Use title from URL if available, otherwise use data-message attribute
-            const titleText = title || guestName?.getAttribute('data-message') || 'To Mr./Mrs./Brother/Sister';
+            let titleText = title || guestName?.getAttribute('data-message') || 'To Mr./Mrs./Brother/Sister';
+            
+            // Ensure "To" prefix is added if not already present
+            if (titleText && !titleText.toLowerCase().startsWith('to ')) {
+                titleText = 'To ' + titleText;
+            }
             
             // Update data-message attribute if title is provided
             if (title && guestName) {
