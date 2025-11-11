@@ -69,7 +69,9 @@ export const guest = (() => {
         let name = null;
 
         if (raw.length > 1 && raw[1].length >= 1) {
-            name = window.decodeURIComponent(raw[1]);
+            // Get only the name part, stop at the next & parameter
+            const namePart = raw[1].split('&')[0];
+            name = window.decodeURIComponent(namePart);
         }
 
         // Get title from URL parameter
