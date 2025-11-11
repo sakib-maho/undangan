@@ -123,6 +123,14 @@ html[data-bs-theme="light"] .btn-transparent {
     animation: none !important;
 }
 
+/* Video styles - less specific selectors first */
+.jinni-overlay video,
+.jinni-gif video {
+    transition: none !important;
+    animation: none !important;
+    will-change: auto;
+}
+
 /* Ensure video plays smoothly without transitions */
 #welcome video {
     transition: none !important;
@@ -347,8 +355,7 @@ html[data-bs-theme="dark"] .bg-white-black {
     pointer-events: auto !important;
 }
 
-.jinni-overlay img,
-.jinni-overlay video {
+.jinni-overlay img {
     pointer-events: auto;
 }
 
