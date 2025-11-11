@@ -313,7 +313,7 @@
             color: #ff0000 !important;
             font-size: 3rem !important;
             margin: 0 0 0.5rem 0 !important;
-            animation: pulse 2s infinite, fadeInDown 1s ease-out 0.2s both;
+            animation: fadeInDown 1s ease-out 0.2s both, pulse 2s ease-in-out infinite 1.2s;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.6);
             display: block !important;
             visibility: visible !important;
@@ -456,6 +456,14 @@
             }
             50% {
                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 20px rgba(212, 175, 55, 0.4);
+            }
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(0) scale(1.15);
             }
         }
         /* Star animations */
