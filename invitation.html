@@ -39,7 +39,7 @@
             z-index: 0;
         }
         .invitation-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 2rem;
@@ -50,6 +50,7 @@
             box-sizing: border-box;
             position: relative;
             z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         @media (max-width: 576px) {
             .invitation-card {
@@ -62,6 +63,7 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
         }
         @media (max-width: 576px) {
             .invitation-subtitle {
@@ -73,6 +75,7 @@
             font-weight: bold;
             color: #333;
             margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
         }
         @media (max-width: 576px) {
             .invitation-title {
@@ -81,9 +84,10 @@
         }
         .invitation-message {
             font-size: 1.1rem;
-            color: #666;
+            color: #333;
             margin: 2rem 0;
             line-height: 1.8;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
         }
         @media (max-width: 576px) {
             .invitation-message {
