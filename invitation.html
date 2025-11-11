@@ -167,6 +167,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
         const name = urlParams.get('name'); // Get name directly from URL
+        const title = urlParams.get('title'); // Get title directly from URL
         
         const invitationNameEl = document.getElementById('invitation-name');
         const joinButton = document.getElementById('join-button');
@@ -185,6 +186,9 @@
         } else {
             invitationNameEl.textContent = 'Guest';
         }
+        
+        // Store title for redirect
+        const invitationTitle = title ? decodeURIComponent(title) : 'Mr./Mrs./Brother/Sister';
         
         // Helper function to create fetch with timeout
         function fetchWithTimeout(url, options = {}, timeout = 10000) {
@@ -248,7 +252,7 @@
             
             // Redirect immediately (don't wait for API call)
             setTimeout(() => {
-                window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(guestName)}`;
+                window.location.href = `${FRONTEND_URL}/?to=${encodeURIComponent(guestName)}&title=${encodeURIComponent(invitationTitle)}`;
             }, 100);
         
         // Mark invitation as used asynchronously (non-blocking)

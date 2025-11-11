@@ -72,12 +72,24 @@ export const guest = (() => {
             name = window.decodeURIComponent(raw[1]);
         }
 
+        // Get title from URL parameter
+        const titleMatch = window.location.search.match(/[?&]title=([^&]+)/);
+        const title = titleMatch ? window.decodeURIComponent(titleMatch[1]) : null;
+
         if (name) {
             const guestName = document.getElementById('guest-name');
             const div = document.createElement('div');
             div.classList.add('m-2');
 
-            const template = `<small class="mt-0 mb-1 mx-0 p-0">${util.escapeHtml(guestName?.getAttribute('data-message'))}</small><p class="m-0 p-0" style="font-size: 1.25rem">${util.escapeHtml(name)}</p>`;
+            // Use title from URL if available, otherwise use data-message attribute
+            const titleText = title || guestName?.getAttribute('data-message') || 'To Mr./Mrs./Brother/Sister';
+            
+            // Update data-message attribute if title is provided
+            if (title && guestName) {
+                guestName.setAttribute('data-message', titleText);
+            }
+
+            const template = `<small class="mt-0 mb-1 mx-0 p-0">${util.escapeHtml(titleText)}</small><p class="m-0 p-0" style="font-size: 1.25rem">${util.escapeHtml(name)}</p>`;
             util.safeInnerHTML(div, template);
 
             guestName?.appendChild(div);
