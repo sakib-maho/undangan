@@ -11,7 +11,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-2FMn2Zx6PuH5tdBQDRNwrOo60ts5wWPC9R8jK67b3t4=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css" integrity="sha256-4rTIfo5GQTi/7UJqoyUJQKzxW8VN/YBH31+Cy+vTZj4=" crossorigin="anonymous">
     
+    <!-- Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Sacramento&display=swap">
+    
     <style>
+        :root {
+            --arabian-gold: #D4AF37;
+            --arabian-gold-light: #F4D03F;
+            --arabian-gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+        }
         * {
             -webkit-tap-highlight-color: transparent;
         }
@@ -28,6 +36,52 @@
             overflow-x: hidden;
             position: relative;
         }
+        @media (max-width: 768px) {
+            body {
+                background: url('./assets/images/mobile-invitation-back.png') center center / cover no-repeat;
+                background-attachment: fixed;
+                padding: 0.5rem;
+            }
+            .invitation-card {
+                padding: 1rem;
+                max-width: 88%;
+                border-radius: 15px;
+                margin: 0.5rem;
+                animation: fadeInUp 1s ease-out, floatMobile 6s ease-in-out infinite;
+            }
+            .arabian-moon {
+                font-size: 4rem;
+                top: -75px;
+                right: 35px;
+            }
+            .invitation-subtitle {
+                font-size: 1.05rem;
+                margin-bottom: 0.3rem;
+            }
+            .invitation-title {
+                font-size: 1.4rem;
+                margin-bottom: 0.7rem;
+            }
+            .invitation-message {
+                font-size: 0.92rem;
+                margin: 1.2rem 0;
+                line-height: 1.6;
+            }
+            .join-button {
+                padding: 0.75rem 1.6rem;
+                font-size: 1.1rem;
+                margin-top: 1.2rem;
+                border-radius: 38px;
+            }
+            .heart-icon {
+                font-size: 2.2rem !important;
+                margin: 0 0 0.3rem 0 !important;
+            }
+            .sparkle {
+                width: 3px;
+                height: 3px;
+            }
+        }
         body::before {
             content: '';
             position: fixed;
@@ -35,86 +89,179 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0);
             z-index: 0;
         }
         .invitation-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
             border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            max-width: 600px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            max-width: 500px;
             width: 100%;
             text-align: center;
             box-sizing: border-box;
             position: relative;
             z-index: 1;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: fadeInUp 1s ease-out, float 6s ease-in-out infinite;
+            overflow: visible;
+            margin: 1rem;
+        }
+        .invitation-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+        .invitation-card::after {
+            content: '✨';
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: sparkle 3s ease-in-out infinite;
         }
         @media (max-width: 576px) {
+            body {
+                padding: 0.5rem;
+            }
             .invitation-card {
-                padding: 1.5rem;
+                padding: 0.8rem;
+                max-width: 85%;
+                border-radius: 12px;
+                margin: 0.5rem;
+                animation: fadeInUp 1s ease-out, floatMobile 6s ease-in-out infinite;
+            }
+            .arabian-moon {
+                font-size: 3.5rem;
+                top: -70px;
+                right: 40px;
+            }
+            .invitation-subtitle {
+                font-size: 1rem;
+                margin-bottom: 0.2rem;
+            }
+            .invitation-title {
+                font-size: 1.3rem;
+                margin-bottom: 0.6rem;
+            }
+            .invitation-message {
+                font-size: 0.9rem;
+                margin: 1rem 0;
+                line-height: 1.5;
+            }
+            .join-button {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+                width: 100%;
+                max-width: 250px;
+                border-radius: 35px;
+                margin-top: 1rem;
+            }
+            .heart-icon {
+                font-size: 2rem !important;
+                margin: 0 0 0.2rem 0 !important;
+            }
+            .sparkle {
+                width: 2px;
+                height: 2px;
             }
         }
+        @keyframes floatMobile {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+        .font-esthetic {
+            font-family: 'Sacramento', cursive;
+            font-weight: 400;
+        }
         .invitation-subtitle {
-            font-size: 1rem;
-            color: #667eea;
+            font-size: 1.5rem;
+            color: var(--arabian-gold-light);
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 400;
             letter-spacing: 0.5px;
-            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.4);
+            animation: fadeInUp 1s ease-out 0.4s both, shimmer 3s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
         }
         @media (max-width: 576px) {
             .invitation-subtitle {
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
         }
         .invitation-title {
             font-size: 2rem;
-            font-weight: bold;
-            color: #333;
+            font-weight: 400;
+            color: var(--arabian-gold);
             margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+            font-family: 'Sacramento', cursive;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.4);
+            animation: fadeInUp 1s ease-out 0.6s both, glow 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
         }
         @media (max-width: 576px) {
             .invitation-title {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
         }
         .invitation-message {
             font-size: 1.1rem;
-            color: #333;
+            color: #fff;
             margin: 2rem 0;
             line-height: 1.8;
-            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 0, 0, 0.4);
+            animation: fadeInUp 1s ease-out 0.8s both;
+            position: relative;
+            z-index: 2;
         }
         @media (max-width: 576px) {
             .invitation-message {
-                font-size: 1rem;
-                margin: 1.5rem 0;
+                font-size: 0.9rem;
+                margin: 1rem 0;
             }
         }
         .invitation-name {
-            color: #667eea;
-            font-weight: bold;
+            color: var(--arabian-gold-light);
+            font-weight: 600;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(212, 175, 55, 0.4);
         }
         .join-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 1rem 2.5rem;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             border-radius: 50px;
-            color: white;
-            font-weight: bold;
+            color: var(--arabian-gold);
+            font-weight: 700;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s, background 0.2s;
             margin-top: 2rem;
             min-height: 48px;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
             width: auto;
             display: inline-block;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.6), 0 0 25px rgba(212, 175, 55, 0.4);
+            font-family: 'Sacramento', cursive;
+            animation: fadeInUp 1s ease-out 1s both, buttonPulse 2.5s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
         }
         .join-button:active {
             transform: scale(0.95);
@@ -122,14 +269,16 @@
         }
         .join-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
         }
         @media (max-width: 576px) {
             .join-button {
-                padding: 0.9rem 2rem;
-                font-size: 1rem;
+                padding: 0.7rem 1.5rem;
+                font-size: 0.85rem;
                 width: 100%;
-                max-width: 300px;
+                max-width: 250px;
+                border-radius: 35px;
             }
         }
         .join-button:disabled {
@@ -138,19 +287,331 @@
             transform: none;
         }
         .heart-icon {
-            color: #ff6b9d;
-            font-size: 3rem;
-            margin: 1rem 0;
-            animation: pulse 2s infinite;
+            color: #ff0000 !important;
+            font-size: 3rem !important;
+            margin: 0 0 0.5rem 0 !important;
+            animation: pulse 2s infinite, fadeInDown 1s ease-out 0.2s both;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.6);
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative;
+            z-index: 2;
+        }
+        .arabian-moon {
+            position: absolute;
+            top: -100px;
+            right: 30px;
+            font-size: 5rem;
+            z-index: 10;
+            animation: moonFadeIn 1.5s ease-out 0.5s both, moonFloat 8s ease-in-out infinite 2s, moonGlow 3s ease-in-out infinite 2s;
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8));
+        }
+        .heart-icon i {
+            color: #ff0000 !important;
+            font-size: inherit !important;
         }
         @media (max-width: 576px) {
             .heart-icon {
-                font-size: 2.5rem;
+                font-size: 2rem !important;
             }
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        @keyframes moonFloat {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(-5px, -8px) rotate(-5deg);
+            }
+            50% {
+                transform: translate(5px, -12px) rotate(5deg);
+            }
+            75% {
+                transform: translate(-3px, -6px) rotate(-3deg);
+            }
+        }
+        @keyframes moonGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.8));
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(212, 175, 55, 1)) drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+            }
+        }
+        @keyframes moonFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5) translate(20px, -20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translate(0, 0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0) translate(0, 0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1) translate(20px, -20px);
+            }
+        }
+        @keyframes shimmer {
+            0%, 100% {
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.4);
+            }
+            50% {
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.6);
+            }
+        }
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.4);
+            }
+            50% {
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.7), 0 0 35px rgba(212, 175, 55, 0.5);
+            }
+        }
+        @keyframes buttonPulse {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 0 rgba(212, 175, 55, 0);
+            }
+            50% {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 20px rgba(212, 175, 55, 0.4);
+            }
+        }
+        /* Star animations */
+        .star-trail {
+            position: absolute;
+            font-size: 1.2rem;
+            color: var(--arabian-gold-light);
+            pointer-events: none;
+            z-index: 5;
+            opacity: 0;
+            animation: starToMoon 3s ease-out infinite;
+        }
+        @keyframes starToMoon {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(-5px, -62.5px) scale(1);
+            }
+            50% {
+                transform: translate(5px, -125px) scale(0.8);
+            }
+            75% {
+                transform: translate(-3px, -187.5px) scale(0.6);
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(0, -250px) scale(0.5);
+            }
+        }
+        .star-trail:nth-of-type(2) {
+            top: 35%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .star-trail:nth-of-type(3) {
+            top: 35%;
+            left: 20%;
+            animation-delay: 0.2s;
+        }
+        .star-trail:nth-of-type(4) {
+            top: 35%;
+            left: 30%;
+            animation-delay: 0.4s;
+        }
+        .star-trail:nth-of-type(5) {
+            top: 35%;
+            left: 40%;
+            animation-delay: 0.6s;
+        }
+        .star-trail:nth-of-type(6) {
+            top: 35%;
+            left: 50%;
+            animation-delay: 0.8s;
+        }
+        .star-trail:nth-of-type(7) {
+            top: 35%;
+            left: 60%;
+            animation-delay: 1s;
+        }
+        .star-trail:nth-of-type(8) {
+            top: 35%;
+            left: 70%;
+            animation-delay: 1.2s;
+        }
+        .star-trail:nth-of-type(9) {
+            top: 35%;
+            left: 80%;
+            animation-delay: 1.4s;
+        }
+        .star-trail:nth-of-type(10) {
+            top: 35%;
+            left: 15%;
+            animation-delay: 1.6s;
+        }
+        .star-trail:nth-of-type(11) {
+            top: 35%;
+            left: 45%;
+            animation-delay: 1.8s;
+        }
+        .star-trail:nth-of-type(12) {
+            top: 35%;
+            left: 75%;
+            animation-delay: 2s;
+        }
+        @media (max-width: 768px) {
+            .star-trail {
+                font-size: 1rem;
+            }
+            @keyframes starToMoon {
+                0% {
+                    opacity: 0;
+                    transform: translate(0, 0) scale(0);
+                }
+                10% {
+                    opacity: 1;
+                    transform: translate(0, 0) scale(1);
+                }
+                25% {
+                    transform: translate(-4px, -50px) scale(1);
+                }
+                50% {
+                    transform: translate(4px, -100px) scale(0.8);
+                }
+                75% {
+                    transform: translate(-2px, -150px) scale(0.6);
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(0, -200px) scale(0.5);
+                }
+            }
+        }
+        @media (max-width: 576px) {
+            .star-trail {
+                font-size: 0.9rem;
+            }
+            @keyframes starToMoon {
+                0% {
+                    opacity: 0;
+                    transform: translate(0, 0) scale(0);
+                }
+                10% {
+                    opacity: 1;
+                    transform: translate(0, 0) scale(1);
+                }
+                25% {
+                    transform: translate(-3px, -45px) scale(1);
+                }
+                50% {
+                    transform: translate(3px, -90px) scale(0.8);
+                }
+                75% {
+                    transform: translate(-2px, -135px) scale(0.6);
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(0, -180px) scale(0.5);
+                }
+            }
+        }
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-15px) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(-80px) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0);
+            }
+        }
+        @media (max-width: 768px) {
+            .sparkle {
+                animation: sparkleFloatMobile 4s ease-in-out infinite;
+            }
+        }
+        @keyframes sparkleFloatMobile {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-10px) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(-60px) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-70px) scale(0);
+            }
         }
         .loading {
             display: none;
@@ -172,11 +633,27 @@
 </head>
 <body>
     <div class="invitation-card">
+        <div class="arabian-moon">🌙</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="star-trail">✨</div>
+        <div class="sparkle" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+        <div class="sparkle" style="top: 20%; right: 20%; animation-delay: 1s;"></div>
+        <div class="sparkle" style="bottom: 30%; left: 25%; animation-delay: 2s;"></div>
+        <div class="sparkle" style="bottom: 20%; right: 15%; animation-delay: 1.5s;"></div>
         <div class="heart-icon">
             <i class="fas fa-heart"></i>
         </div>
-        <p class="invitation-subtitle">✨ Step into a tale of magic and love ✨</p>
-        <h1 class="invitation-title">Sakib & Shabrina</h1>
+        <p class="invitation-subtitle font-esthetic">✨ Step into a tale of magic and love ✨</p>
+        <h1 class="invitation-title font-esthetic">Sakib & Shabrina</h1>
         <p class="invitation-message">
             warmly invite <span class="invitation-name" id="invitation-name">...</span> to join us under the starlit sky of our Arabian Night of Love
         </p>
