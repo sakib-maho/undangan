@@ -229,6 +229,25 @@ export const guest = (() => {
             jinniOverlay.style.opacity = '0';
             jinniOverlay.style.transition = 'opacity 1.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             
+            // Get video and play it after overlay is visible
+            const video = jinniOverlay.querySelector('video');
+            if (video) {
+                video.muted = true; // Mute the video
+                video.volume = 1.0;
+                // Small delay to ensure overlay is visible before playing
+                setTimeout(() => {
+                    video.play().then(() => {
+                        console.log('Video playing (muted)');
+                    }).catch(err => {
+                        console.warn('Video play failed:', err);
+                        // Retry once
+                        setTimeout(() => {
+                            video.play().catch(e => console.error('Video retry failed:', e));
+                        }, 200);
+                    });
+                }, 50);
+            }
+            
             // Fade in jinni smoothly
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -236,7 +255,7 @@ export const guest = (() => {
                 });
             });
             
-            // After 3 seconds, fade out GIF overlay
+            // After 6.5 seconds, fade out GIF overlay
             setTimeout(() => {
                 // Fade out GIF overlay
                 jinniOverlay.style.transition = 'opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -245,7 +264,7 @@ export const guest = (() => {
                 setTimeout(() => {
                     jinniOverlay.style.display = 'none';
                 }, 1200);
-            }, 3000); // Show GIF for 3 seconds
+            }, 6500); // Show video for 6.5 seconds
         } else {
             // Fallback if GIF not found
             root.classList.remove('opacity-0');
