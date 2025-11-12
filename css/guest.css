@@ -60,6 +60,43 @@ html[data-bs-theme="light"] .btn-transparent {
     pointer-events: none;
 }
 
+.heart-loading-icon {
+    color: #ff0000 !important;
+    font-size: 3.5rem !important;
+    animation: pulse 1.5s ease-in-out infinite, heartFloat 2s ease-in-out infinite;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.heart-loading-icon i {
+    color: #ff0000 !important;
+}
+
+@keyframes heartFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.progress-bar {
+    transition: width 0.3s ease;
+    animation: progressGlow 2s ease-in-out infinite;
+}
+
+@keyframes progressGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(13, 110, 253, 0.8);
+    }
+}
+
 /* Smooth root page fade-in animation */
 #root {
     transition: opacity 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);

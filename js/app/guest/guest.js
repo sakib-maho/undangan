@@ -430,6 +430,11 @@ export const guest = (() => {
     };
 
     /**
+     * @type {number}
+     */
+    let pageLoadStartTime = Date.now();
+
+    /**
      * @returns {Promise<void>}
      */
     const booting = async () => {
@@ -448,6 +453,15 @@ export const guest = (() => {
             document.getElementById('information')?.remove();
         }
 
+        // Ensure loading page stays visible for at least 4 seconds
+        const elapsedTime = Date.now() - pageLoadStartTime;
+        const minDisplayTime = 4000; // 4 seconds
+        const remainingTime = Math.max(0, minDisplayTime - elapsedTime);
+        
+        if (remainingTime > 0) {
+            await new Promise(resolve => setTimeout(resolve, remainingTime));
+        }
+
         // wait until welcome screen is show.
         await util.changeOpacity(document.getElementById('welcome'), true);
 
@@ -459,6 +473,9 @@ export const guest = (() => {
      * @returns {void}
      */
     const pageLoaded = () => {
+        // Track page load start time
+        pageLoadStartTime = Date.now();
+        
         lang.init();
         offline.init();
         comment.init();
