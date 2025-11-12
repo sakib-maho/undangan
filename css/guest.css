@@ -175,6 +175,53 @@ html[data-bs-theme="light"] .btn-transparent {
     will-change: auto;
 }
 
+/* Welcome Page Desktop Background Image */
+@media (min-width: 768px) {
+    #welcome {
+        background-image: url('../assets/images/desktop_back.png');
+        background-size: cover;
+        background-position: center 10%;
+        background-repeat: no-repeat;
+    }
+    
+    /* Transparent box for welcome page content */
+    #welcome .d-flex.flex-column.text-center.position-relative {
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2px);
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Increase text contrast on welcome page */
+    #welcome h2.text-golden,
+    #welcome .text-golden {
+        color: var(--arabian-gold) !important;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.6), 0 4px 12px rgba(0, 0, 0, 0.9) !important;
+        font-weight: 700 !important;
+    }
+    
+    #welcome #guest-name {
+        color: var(--arabian-gold-light) !important;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(244, 208, 63, 0.5), 0 3px 10px rgba(0, 0, 0, 0.9) !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Desktop-specific button styles */
+    #welcome .welcome-button-golden {
+        background: #BCEBE4 !important;
+        border-color: #A8E0D8 !important;
+        color: #333333 !important;
+        text-shadow: none !important;
+    }
+    
+    #welcome .welcome-button-golden:hover {
+        background: #A8E0D8 !important;
+        color: #333333 !important;
+        text-shadow: none !important;
+    }
+}
+
 /* Welcome Page GIF Background */
 .welcome-gif-bg {
     position: absolute;
@@ -340,6 +387,7 @@ html[data-bs-theme="dark"] .bg-white-black {
     transform: scale(1.02);
 }
 
+/* Welcome Button - Mobile (Original Styles) */
 .welcome-button-golden {
     background: linear-gradient(135deg, #BCEBE4 0%, #A8E0D8 50%, #BCEBE4 100%) !important;
     border-color: #A8E0D8 !important;
