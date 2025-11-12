@@ -232,20 +232,51 @@ export const guest = (() => {
             // Get video and play it after overlay is visible
             const video = jinniOverlay.querySelector('video');
             if (video) {
+                // Set video source based on screen size
+                const isDesktop = window.innerWidth >= 768;
+                const videoSource = video.querySelector('source');
+                
+                if (isDesktop && videoSource) {
+                    // Desktop: use Aladdin & Jasmine video
+                    videoSource.src = './assets/images/aladdin-jasmine-desktop.mp4';
+                    video.load(); // Reload video with new source
+                } else if (!isDesktop && videoSource) {
+                    // Mobile: use jinni animation
+                    videoSource.src = './assets/images/jinni-animation.mp4';
+                    video.load();
+                }
+                
                 video.muted = true; // Mute the video
                 video.volume = 1.0;
-                // Small delay to ensure overlay is visible before playing
-                setTimeout(() => {
-                    video.play().then(() => {
-                        console.log('Video playing (muted)');
-                    }).catch(err => {
-                        console.warn('Video play failed:', err);
-                        // Retry once
+                
+                // Wait for video to load before playing (for desktop)
+                if (isDesktop) {
+                    video.addEventListener('canplay', () => {
                         setTimeout(() => {
-                            video.play().catch(e => console.error('Video retry failed:', e));
-                        }, 200);
-                    });
-                }, 50);
+                            video.play().then(() => {
+                                console.log('Desktop video playing (muted)');
+                            }).catch(err => {
+                                console.warn('Desktop video play failed:', err);
+                                setTimeout(() => {
+                                    video.play().catch(e => console.error('Video retry failed:', e));
+                                }, 500);
+                            });
+                        }, 100);
+                    }, { once: true });
+                } else {
+                    // Mobile: small delay to ensure overlay is visible before playing
+                    setTimeout(() => {
+                        video.play().then(() => {
+                            console.log('Mobile video playing (muted)');
+                        }).catch(err => {
+                            console.warn('Mobile video play failed:', err);
+                            // Retry once
+                            setTimeout(() => {
+                                video.play().catch(e => console.error('Video retry failed:', e));
+                            }, 200);
+                        });
+                    }, 50);
+                }
             }
             
             // Fade in jinni smoothly
@@ -255,7 +286,9 @@ export const guest = (() => {
                 });
             });
             
-            // After 6.5 seconds, fade out GIF overlay
+            // After video duration, fade out GIF overlay
+            // Desktop: 10.5 seconds, Mobile: 6.5 seconds
+            const videoDuration = window.innerWidth >= 768 ? 10500 : 6500;
             setTimeout(() => {
                 // Fade out GIF overlay
                 jinniOverlay.style.transition = 'opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
@@ -264,7 +297,7 @@ export const guest = (() => {
                 setTimeout(() => {
                     jinniOverlay.style.display = 'none';
                 }, 1200);
-            }, 6500); // Show video for 6.5 seconds
+            }, videoDuration);
         } else {
             // Fallback if GIF not found
             root.classList.remove('opacity-0');
