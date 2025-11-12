@@ -160,27 +160,6 @@ html[data-bs-theme="light"] .btn-transparent {
     animation: none !important;
 }
 
-/* Home foreground video - prevent blurriness */
-.home-foreground-video {
-    /* Remove transforms that can cause blur */
-    transform: none !important;
-    -webkit-transform: none !important;
-    /* Hardware acceleration */
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    /* Smooth video rendering (not pixelated) */
-    image-rendering: auto;
-    -webkit-image-rendering: auto;
-    /* No filters or effects that cause blur */
-    filter: none !important;
-    -webkit-filter: none !important;
-    /* Prevent subpixel rendering issues */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    /* Ensure video renders at full quality */
-    will-change: auto;
-}
-
 /* Video styles - less specific selectors first */
 .jinni-overlay video,
 .jinni-gif video {
@@ -276,18 +255,6 @@ html[data-bs-theme="dark"] .bg-white-black {
     height: 100%;
     object-fit: cover;
     mask-image: linear-gradient(0.5turn, transparent, black 40%, black 60%, transparent);
-}
-
-/* Home section specific overrides - remove effects */
-#home .bg-cover-home {
-    mask-image: none !important;
-    opacity: 1 !important;
-}
-
-#home .home-content-overlay {
-    background-color: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
 }
 
 .width-loading {
