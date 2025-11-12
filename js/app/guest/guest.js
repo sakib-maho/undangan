@@ -230,35 +230,35 @@ export const guest = (() => {
             jinniOverlay.style.transition = 'opacity 1.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             
             // Get video and play it after overlay is visible
-            const video = jinniOverlay.querySelector('video');
-            if (video) {
+            const videoElement = jinniOverlay.querySelector('video');
+            if (videoElement) {
                 // Set video source based on screen size
                 const isDesktop = window.innerWidth >= 768;
-                const videoSource = video.querySelector('source');
+                const videoSource = videoElement.querySelector('source');
                 
                 if (isDesktop && videoSource) {
                     // Desktop: use Aladdin & Jasmine video
                     videoSource.src = './assets/images/aladdin-jasmine-desktop.mp4';
-                    video.load(); // Reload video with new source
+                    videoElement.load(); // Reload video with new source
                 } else if (!isDesktop && videoSource) {
                     // Mobile: use jinni animation
                     videoSource.src = './assets/images/jinni-animation.mp4';
-                    video.load();
+                    videoElement.load();
                 }
                 
-                video.muted = true; // Mute the video
-                video.volume = 1.0;
+                videoElement.muted = true; // Mute the video
+                videoElement.volume = 1.0;
                 
                 // Wait for video to load before playing (for desktop)
                 if (isDesktop) {
-                    video.addEventListener('canplay', () => {
+                    videoElement.addEventListener('canplay', () => {
                         setTimeout(() => {
-                            video.play().then(() => {
-                                console.log('Desktop video playing (muted)');
+                            videoElement.play().then(() => {
+                                // Desktop video playing successfully
                             }).catch(err => {
                                 console.warn('Desktop video play failed:', err);
                                 setTimeout(() => {
-                                    video.play().catch(e => console.error('Video retry failed:', e));
+                                    videoElement.play().catch(e => console.error('Video retry failed:', e));
                                 }, 500);
                             });
                         }, 100);
@@ -266,13 +266,13 @@ export const guest = (() => {
                 } else {
                     // Mobile: small delay to ensure overlay is visible before playing
                     setTimeout(() => {
-                        video.play().then(() => {
-                            console.log('Mobile video playing (muted)');
+                        videoElement.play().then(() => {
+                            // Mobile video playing successfully
                         }).catch(err => {
                             console.warn('Mobile video play failed:', err);
                             // Retry once
                             setTimeout(() => {
-                                video.play().catch(e => console.error('Video retry failed:', e));
+                                videoElement.play().catch(e => console.error('Video retry failed:', e));
                             }, 200);
                         });
                     }, 50);
