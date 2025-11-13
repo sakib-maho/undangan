@@ -304,6 +304,30 @@ html[data-bs-theme="dark"] .bg-white-black {
     mask-image: linear-gradient(0.5turn, transparent, black 40%, black 60%, transparent);
 }
 
+/* Home section - Light mode: fade only bottom edge, keep top fully visible */
+html[data-bs-theme="light"] #home .bg-cover-home {
+    mask-image: linear-gradient(to bottom, black, black 60%, transparent);
+    opacity: 1 !important; /* Full opacity in light mode */
+}
+
+/* Dark mode - restore original behavior with full gradient mask and opacity */
+html[data-bs-theme="dark"] #home .bg-cover-home {
+    mask-image: linear-gradient(0.5turn, transparent, black 40%, black 60%, transparent);
+    opacity: 0.25 !important; /* 25% opacity in dark mode */
+}
+
+/* Light mode - remove blur overlay */
+html[data-bs-theme="light"] #home .bg-overlay-auto {
+    backdrop-filter: none !important;
+    background-color: transparent !important;
+}
+
+/* Dark mode - restore blur overlay */
+html[data-bs-theme="dark"] #home .bg-overlay-auto {
+    backdrop-filter: blur(0.25rem) !important;
+    background-color: rgba(var(--bs-black-rgb), 0.5) !important;
+}
+
 .width-loading {
     width: 25%;
 }
