@@ -328,6 +328,35 @@ html[data-bs-theme="dark"] #home .bg-overlay-auto {
     background-color: rgba(var(--bs-black-rgb), 0.5) !important;
 }
 
+/* Other sections background image styling */
+.bg-cover-other {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mask-image: linear-gradient(0.5turn, transparent, black 40%, black 60%, transparent);
+    z-index: 0;
+}
+
+/* Other sections - Light mode: slight top fade and reduced bottom fade */
+html[data-bs-theme="light"] .bg-cover-other {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 75%, transparent);
+    opacity: 1 !important; /* Full opacity in light mode */
+}
+
+/* Dark mode - restore original behavior with full gradient mask and opacity */
+html[data-bs-theme="dark"] .bg-cover-other {
+    mask-image: linear-gradient(0.5turn, transparent, black 40%, black 60%, transparent);
+    opacity: 0.25 !important; /* 25% opacity in dark mode */
+}
+
+/* Ensure content appears above background images in other sections */
+section:not(#home) > *:not(.bg-cover-other),
+section:not(#home) .container,
+section:not(#home) .container > * {
+    position: relative;
+    z-index: 1;
+}
+
 .width-loading {
     width: 25%;
 }
