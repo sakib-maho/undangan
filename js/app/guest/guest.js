@@ -80,7 +80,14 @@ export const guest = (() => {
 
         // Get prefix from URL parameter
         const prefixMatch = window.location.search.match(/[?&]prefix=([^&]+)/);
-        const prefix = prefixMatch ? window.decodeURIComponent(prefixMatch[1]) : null;
+        let prefix = prefixMatch ? window.decodeURIComponent(prefixMatch[1]) : null;
+
+        // For testing: use dummy text if no name in URL
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        if (!name && isLocalhost) {
+            name = 'Mama & Daddy';
+            prefix = prefix || 'Dear';
+        }
 
         if (name) {
             const guestName = document.getElementById('guest-name');
