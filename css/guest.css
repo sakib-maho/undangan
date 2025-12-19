@@ -202,49 +202,43 @@ html[data-bs-theme="light"] .btn-transparent {
         font-weight: 700 !important;
     }
     
-    /* Position guest-name below image (bottom ~59.9vh) and above "Sakib & Shabrina" text */
+    /* Desktop responsive positioning - Ensure guest-name below image and above "Sakib & Shabrina" */
+    #welcome .welcome-image-golden {
+        z-index: 1 !important;
+    }
+    
     #welcome #guest-name {
         color: var(--arabian-gold-light) !important;
         text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(244, 208, 63, 0.5), 0 3px 10px rgba(0, 0, 0, 0.9) !important;
         font-weight: 600 !important;
         z-index: 10 !important;
-        top: 64vh !important;
-        min-height: 4rem !important;
+        position: absolute !important;
         transform: translateX(-50%) !important;
+        left: 50% !important;
     }
     
-    /* Ensure "Sakib & Shabrina" has proper spacing below guest-name - override inline style */
     #welcome h2.font-esthetic:last-of-type {
-        top: 74vh !important;
         margin-top: 0 !important;
     }
     
-    #welcome #guest-name small {
-        font-size: 0.9rem !important;
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        color: var(--arabian-gold-light) !important;
-        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(244, 208, 63, 0.5), 0 3px 10px rgba(0, 0, 0, 0.9) !important;
-        position: relative !important;
-        z-index: 11 !important;
-    }
-    
-    /* Desktop-specific button styles */
+    /* Desktop-specific button styles - Same as mobile (glassmorphism) */
     #welcome .welcome-button-golden {
         background: rgba(255, 255, 255, 0.2) !important;
+        background-color: rgba(255, 255, 255, 0.2) !important;
         backdrop-filter: blur(10px) !important;
         -webkit-backdrop-filter: blur(10px) !important;
         border: 1px solid rgba(255, 255, 255, 0.3) !important;
-        color: #333333 !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+        color: var(--arabian-gold) !important;
         text-shadow: none !important;
     }
     
     #welcome .welcome-button-golden:hover {
         background: rgba(255, 255, 255, 0.3) !important;
+        background-color: rgba(255, 255, 255, 0.3) !important;
         backdrop-filter: blur(10px) !important;
         -webkit-backdrop-filter: blur(10px) !important;
-        color: #333333 !important;
+        color: var(--arabian-gold) !important;
         text-shadow: none !important;
     }
 }
@@ -538,35 +532,37 @@ img[data-src*="couple.jpg"]:hover {
     transform: scale(1.32) !important;
 }
 
-/* Welcome Button - Mobile (Original Styles) */
-.welcome-button-golden {
-    background: rgba(255, 255, 255, 0.2) !important;
-    background-color: rgba(255, 255, 255, 0.2) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-    color: var(--arabian-gold) !important;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
-    position: relative !important;
-    z-index: 10 !important;
-    pointer-events: auto !important;
-}
+/* Welcome Button - Mobile Only (Glassmorphism Styles) */
+@media (max-width: 767px) {
+    #welcome .welcome-button-golden {
+        background: rgba(255, 255, 255, 0.2) !important;
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+        color: var(--arabian-gold) !important;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+        position: absolute !important;
+        z-index: 10 !important;
+        pointer-events: auto !important;
+    }
 
-.welcome-button-golden:hover {
-    background: rgba(255, 255, 255, 0.3) !important;
-    background-color: rgba(255, 255, 255, 0.3) !important;
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
-    color: var(--arabian-gold) !important;
-}
+    #welcome .welcome-button-golden:hover {
+        background: rgba(255, 255, 255, 0.3) !important;
+        background-color: rgba(255, 255, 255, 0.3) !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+        color: var(--arabian-gold) !important;
+    }
 
-.welcome-button-golden:active {
-    transform: translateY(0);
+    #welcome .welcome-button-golden:active {
+        transform: translateY(0);
+    }
 }
 
 /* Responsive Welcome Page Styles */
@@ -674,21 +670,19 @@ img[data-src*="couple.jpg"]:hover {
     }
 }
 
-/* Tablets (768px to 991px) */
+/* Tablets (768px to 991px) - Desktop responsive positioning */
 @media (min-width: 768px) and (max-width: 991px) {
-    #welcome h2.font-esthetic {
+    #welcome h2.font-esthetic:first-of-type {
         font-size: 2rem !important;
         top: 12vh !important;
     }
     
     #welcome .welcome-image-golden {
-        width: 250px !important;
-        height: 250px !important;
         top: 32vh !important;
         z-index: 1 !important;
     }
     
-    /* Position guest-name below image (bottom ~56.4vh) and above "Sakib & Shabrina" text */
+    /* Position guest-name below image and above "Sakib & Shabrina" text */
     #welcome #guest-name {
         font-size: 1.1rem !important;
         top: 61vh !important;
@@ -696,9 +690,9 @@ img[data-src*="couple.jpg"]:hover {
         position: absolute !important;
         min-height: 4rem !important;
         transform: translateX(-50%) !important;
+        left: 50% !important;
     }
     
-    /* Ensure "Sakib & Shabrina" has proper spacing below guest-name */
     #welcome h2.font-esthetic:last-of-type {
         font-size: 2rem !important;
         top: 70vh !important;
@@ -711,30 +705,103 @@ img[data-src*="couple.jpg"]:hover {
         visibility: visible !important;
     }
     
+    /* Position button below "Sakib & Shabrina" text with proper spacing */
     #welcome .welcome-button-golden {
-        font-size: 1.1rem !important;
-        padding: 0.7rem 1.5rem !important;
-        top: 73vh !important;
+        top: 78vh !important;
+        position: absolute !important;
+        transform: translateX(-50%) !important;
+        left: 50% !important;
     }
 }
 
-/* Small Desktop (992px to 1199px) */
+/* Small Desktop (992px to 1199px) - Desktop responsive positioning */
 @media (min-width: 992px) and (max-width: 1199px) {
-    #welcome h2.font-esthetic {
+    #welcome h2.font-esthetic:first-of-type {
         font-size: 2.1rem !important;
     }
     
     #welcome .welcome-image-golden {
-        width: 280px !important;
-        height: 280px !important;
+        top: 34vh !important;
+        z-index: 1 !important;
+    }
+    
+    /* Position guest-name below image and above "Sakib & Shabrina" text */
+    #welcome #guest-name {
+        font-size: 1.15rem !important;
+        top: 64vh !important;
+        z-index: 10 !important;
+        position: absolute !important;
+        min-height: 4rem !important;
+        transform: translateX(-50%) !important;
+        left: 50% !important;
+    }
+    
+    #welcome h2.font-esthetic:last-of-type {
+        font-size: 2.1rem !important;
+        top: 74vh !important;
+        margin-top: 0 !important;
+    }
+    
+    #welcome #guest-name small {
+        font-size: 0.95rem !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    /* Position button below "Sakib & Shabrina" text with proper spacing */
+    #welcome .welcome-button-golden {
+        top: 82vh !important;
+        position: absolute !important;
+        transform: translateX(-50%) !important;
+        left: 50% !important;
     }
 }
 
-/* Ensure image is responsive */
-#welcome .welcome-image-golden {
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
+/* Large Desktop (1200px+) - Desktop responsive positioning */
+@media (min-width: 1200px) {
+    #welcome .welcome-image-golden {
+        top: 34vh !important;
+        z-index: 1 !important;
+    }
+    
+    /* Position guest-name below image and above "Sakib & Shabrina" text */
+    #welcome #guest-name {
+        font-size: 1.2rem !important;
+        top: 64vh !important;
+        z-index: 10 !important;
+        position: absolute !important;
+        min-height: 4rem !important;
+        transform: translateX(-50%) !important;
+        left: 50% !important;
+    }
+    
+    #welcome h2.font-esthetic:last-of-type {
+        top: 74vh !important;
+        margin-top: 0 !important;
+    }
+    
+    #welcome #guest-name small {
+        font-size: 1rem !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    /* Position button below "Sakib & Shabrina" text with proper spacing */
+    #welcome .welcome-button-golden {
+        top: 82vh !important;
+        position: absolute !important;
+        transform: translateX(-50%) !important;
+        left: 50% !important;
+    }
+}
+
+/* Ensure image is responsive - Mobile only */
+@media (max-width: 767px) {
+    #welcome .welcome-image-golden {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
 }
 
 /* Ensure button text wraps on very small screens */
@@ -753,13 +820,14 @@ img[data-src*="couple.jpg"]:hover {
     overflow-x: hidden;
 }
 
+/* Responsive positioning for all screens - Ensure guest-name is always visible */
 #welcome h2.font-esthetic,
 #welcome #guest-name {
     overflow-wrap: break-word;
     max-width: 100%;
 }
 
-/* Ensure guest-name is always visible above image */
+/* Ensure guest-name is always visible above image - All screens */
 #welcome #guest-name {
     z-index: 10 !important;
     position: absolute !important;
@@ -771,12 +839,11 @@ img[data-src*="couple.jpg"]:hover {
     pointer-events: auto !important;
 }
 
-/* Ensure small text (prefix like "Dear") is always visible */
+/* Ensure small text (prefix like "Dear") is always visible - All screens */
 #welcome #guest-name small {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    font-size: 0.875rem !important;
     line-height: 1.4 !important;
     margin-bottom: 0.25rem !important;
     white-space: nowrap !important;
@@ -805,24 +872,9 @@ img[data-src*="couple.jpg"]:hover {
     }
 }
 
-/* Default positioning for guest-name (desktop) */
+/* Desktop (992px+) - Keep original inline styles, no positioning overrides */
 @media (min-width: 992px) {
-    #welcome .welcome-image-golden {
-        z-index: 1 !important;
-    }
-    
-    /* Position guest-name below image (bottom ~59.9vh) and above "Sakib & Shabrina" text */
-    #welcome #guest-name {
-        top: 64vh !important;
-        z-index: 10 !important;
-        transform: translateX(-50%) !important;
-    }
-    
-    /* Ensure "Sakib & Shabrina" has proper spacing below guest-name - override inline style */
-    #welcome h2.font-esthetic:last-of-type {
-        top: 74vh !important;
-        margin-top: 0 !important;
-    }
+    /* Desktop: Use original inline styles from HTML - no positioning overrides */
 }
 
 /* Jinni Animation Overlay */
