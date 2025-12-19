@@ -456,16 +456,16 @@ section:not(#home) .container > * {
     filter: brightness(1.1) drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
 }
 
-/* Medium specificity - ensure no blur on desktop sidebar images */
-.d-none.d-sm-block .slide-desktop img,
+/* Medium specificity - ensure no blur on desktop sidebar images (ordered by specificity) */
 .sticky-top .slide-desktop img,
+.d-none.d-sm-block .slide-desktop img,
 .sticky-top img.bg-cover-home {
     filter: none !important;
     -webkit-filter: none !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     image-rendering: -webkit-optimize-contrast;
-    image-rendering: high-quality;
+    image-rendering: auto;
 }
 
 /* Remove blur from all parent containers of desktop sidebar images */
