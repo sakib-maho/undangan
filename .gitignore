@@ -4,6 +4,3 @@ node_modules
 package-lock.json
 dist
 public
-# Large video files (exceed GitHub 100MB limit)
-assets/video/Sakib & Shabrina.mov
-assets/video/Sakib & Shabrina 2.mov
