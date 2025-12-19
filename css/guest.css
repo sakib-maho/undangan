@@ -584,13 +584,17 @@ img[data-src*="couple.jpg"]:hover {
     
     /* Position guest-name below image (bottom ~50.5vh) and above "Sakib & Shabrina" text */
     #welcome #guest-name {
-        font-size: 0.9rem !important;
+        font-size: 1.1rem !important;
         top: 55vh !important;
         padding: 0 1rem;
         z-index: 10 !important;
         position: absolute !important;
         min-height: 3rem !important;
         transform: translateX(-50%) !important;
+    }
+    
+    #welcome #guest-name p {
+        font-size: 1.4rem !important;
     }
     
     /* Ensure "Sakib & Shabrina" has proper spacing below guest-name */
@@ -601,8 +605,9 @@ img[data-src*="couple.jpg"]:hover {
         margin-top: 0 !important;
     }
     
+    /* "Dear" text should be 90% of name text size (1.4rem * 0.9 = 1.26rem) */
     #welcome #guest-name small {
-        font-size: 0.8rem !important;
+        font-size: 1.26rem !important;
         display: block !important;
         visibility: visible !important;
     }
@@ -639,13 +644,17 @@ img[data-src*="couple.jpg"]:hover {
     
     /* Position guest-name below image (bottom ~57.5vh) and above "Sakib & Shabrina" text */
     #welcome #guest-name {
-        font-size: 1rem !important;
+        font-size: 1.2rem !important;
         top: 59vh !important;
         padding: 0 1.5rem;
         z-index: 10 !important;
         position: absolute !important;
         min-height: 3.5rem !important;
         transform: translateX(-50%) !important;
+    }
+    
+    #welcome #guest-name p {
+        font-size: 1.5rem !important;
     }
     
     /* Ensure "Sakib & Shabrina" has proper spacing below guest-name */
@@ -656,8 +665,9 @@ img[data-src*="couple.jpg"]:hover {
         margin-top: 0 !important;
     }
     
+    /* "Dear" text should be 90% of name text size (1.5rem * 0.9 = 1.35rem) */
     #welcome #guest-name small {
-        font-size: 0.85rem !important;
+        font-size: 1.35rem !important;
         display: block !important;
         visibility: visible !important;
     }
@@ -853,19 +863,7 @@ img[data-src*="couple.jpg"]:hover {
     text-align: center !important;
 }
 
-/* Responsive font sizes for small text */
-@media (max-width: 480px) {
-    #welcome #guest-name small {
-        font-size: 0.8rem !important;
-    }
-}
-
-@media (min-width: 481px) and (max-width: 767px) {
-    #welcome #guest-name small {
-        font-size: 0.85rem !important;
-    }
-}
-
+/* Responsive font sizes for small text - Desktop only */
 @media (min-width: 768px) {
     #welcome #guest-name small {
         font-size: 0.9rem !important;
