@@ -210,7 +210,6 @@ html[data-bs-theme="light"] .btn-transparent {
     
     /* Desktop-specific button styles */
     #welcome .welcome-button-golden {
-        background-color: rgba(255, 255, 255, 0.2) !important;
         background: rgba(255, 255, 255, 0.2) !important;
         backdrop-filter: blur(10px) !important;
         -webkit-backdrop-filter: blur(10px) !important;
@@ -221,7 +220,6 @@ html[data-bs-theme="light"] .btn-transparent {
     
     #welcome .welcome-button-golden:hover {
         background: rgba(255, 255, 255, 0.3) !important;
-        background-color: rgba(255, 255, 255, 0.3) !important;
         backdrop-filter: blur(10px) !important;
         -webkit-backdrop-filter: blur(10px) !important;
         color: #333333 !important;
@@ -319,26 +317,6 @@ html[data-bs-theme="dark"] .bg-white-black {
     filter: none !important;
     -webkit-filter: none !important;
     transform: translateZ(0) scale(1);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-/* Desktop sidebar specific - ensure maximum sharpness for photos */
-.sticky-top .bg-cover-home {
-    /* Use best quality interpolation for photos being scaled down */
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: auto;
-    -ms-interpolation-mode: bicubic;
-    /* Prevent any filters that could cause blur */
-    filter: none !important;
-    -webkit-filter: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    /* Force GPU rendering for better quality */
-    transform: translateZ(0) scale(1);
-    -webkit-transform: translateZ(0) scale(1);
-    will-change: auto;
-    /* Ensure no subpixel rendering */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
 }
@@ -464,13 +442,30 @@ section:not(#home) .container > * {
     box-shadow: 0 8px 32px rgba(212, 175, 55, 0.15);
 }
 
-/* Ensure no blur on desktop sidebar images - COMPREHENSIVE */
-.sticky-top .bg-cover-home,
-.sticky-top .slide-desktop .bg-cover-home,
+/* Lower specificity image selectors first */
+.jinni-overlay img {
+    pointer-events: auto;
+}
+
+.lamp-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: transparent;
+    filter: brightness(1.1) drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
+}
+
+button:hover .lamp-icon img,
+button:active .lamp-icon img,
+button:focus .lamp-icon img {
+    filter: brightness(1.3) drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+}
+
+/* Higher specificity - ensure no blur on desktop sidebar images */
+.d-none.d-sm-block .slide-desktop img,
 .sticky-top .slide-desktop img,
-.sticky-top img.bg-cover-home,
-.d-none.d-sm-block .bg-cover-home,
-.d-none.d-sm-block .slide-desktop img {
+.sticky-top img.bg-cover-home {
     filter: none !important;
     -webkit-filter: none !important;
     backdrop-filter: none !important;
@@ -587,9 +582,6 @@ img[data-src*="couple.jpg"]:hover {
     pointer-events: auto !important;
 }
 
-.jinni-overlay img {
-    pointer-events: auto;
-}
 
 .jinni-gif {
     width: 100vw !important;
@@ -1152,14 +1144,6 @@ html[data-bs-theme="dark"] .card-modern:hover {
     -webkit-animation: lampGlow 2s ease-in-out infinite alternate;
 }
 
-.lamp-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    background: transparent;
-    filter: brightness(1.1) drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
-}
 
 @keyframes lampGlow {
     0% {
@@ -1205,11 +1189,6 @@ button:focus .lamp-icon {
     }
 }
 
-button:hover .lamp-icon img,
-button:active .lamp-icon img,
-button:focus .lamp-icon img {
-    filter: brightness(1.3) drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
-}
 
 /* Mobile-specific styles */
 @media (max-width: 576px) {
