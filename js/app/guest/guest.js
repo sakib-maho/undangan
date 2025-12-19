@@ -159,13 +159,13 @@ export const guest = (() => {
         // Wait for all images to load before starting slideshow
         const waitForImages = () => {
             return Promise.all(
-                Array.from(slides).map((slide) => {
+                Array.from(slides).map((slideElement) => {
                     return new Promise((resolve) => {
-                        if (slide.complete && slide.naturalWidth > 0) {
+                        if (slideElement.complete && slideElement.naturalWidth > 0) {
                             resolve();
                         } else {
-                            slide.onload = resolve;
-                            slide.onerror = resolve; // Continue even if image fails
+                            slideElement.onload = resolve;
+                            slideElement.onerror = resolve; // Continue even if image fails
                         }
                     });
                 })
@@ -188,7 +188,9 @@ export const guest = (() => {
         let isRunning = true;
 
         const nextSlide = () => {
-            if (!isRunning) return;
+            if (!isRunning) {
+                return;
+            }
 
             // Start fading out current slide
             slides[currentIndex].classList.remove('active');
