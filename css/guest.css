@@ -596,7 +596,7 @@ img[data-src*="couple.jpg"]:hover {
     /* Ensure "Sakib & Shabrina" has proper spacing below guest-name */
     #welcome h2.font-esthetic:last-of-type {
         font-size: 1.5rem !important;
-        top: 64vh !important;
+        top: 66vh !important;
         padding: 0 1rem;
         margin-top: 0 !important;
     }
@@ -610,7 +610,7 @@ img[data-src*="couple.jpg"]:hover {
     #welcome .welcome-button-golden {
         font-size: 0.9rem !important;
         padding: 0.5rem 1rem !important;
-        top: 70vh !important;
+        top: 72vh !important;
         max-width: 90vw !important;
         white-space: nowrap;
     }
@@ -651,7 +651,7 @@ img[data-src*="couple.jpg"]:hover {
     /* Ensure "Sakib & Shabrina" has proper spacing below guest-name */
     #welcome h2.font-esthetic:last-of-type {
         font-size: 1.75rem !important;
-        top: 67vh !important;
+        top: 69vh !important;
         padding: 0 1.5rem;
         margin-top: 0 !important;
     }
@@ -665,7 +665,7 @@ img[data-src*="couple.jpg"]:hover {
     #welcome .welcome-button-golden {
         font-size: 1rem !important;
         padding: 0.6rem 1.2rem !important;
-        top: 72vh !important;
+        top: 74vh !important;
         max-width: 85vw !important;
     }
 }
