@@ -223,19 +223,20 @@ html[data-bs-theme="light"] .btn-transparent {
     
     /* Desktop-specific button styles - Same as mobile (glassmorphism) */
     #welcome .welcome-button-golden {
-        background: rgba(255, 255, 255, 0.2) !important;
-        background-color: rgba(255, 255, 255, 0.2) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        background-color: rgba(255, 255, 255, 0.1) !important;
         backdrop-filter: blur(10px) !important;
         -webkit-backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-        border-color: rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
         color: var(--arabian-gold) !important;
         text-shadow: none !important;
+        font-weight: 700 !important;
     }
     
     #welcome .welcome-button-golden:hover {
-        background: rgba(255, 255, 255, 0.3) !important;
-        background-color: rgba(255, 255, 255, 0.3) !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        background-color: rgba(255, 255, 255, 0.15) !important;
         backdrop-filter: blur(10px) !important;
         -webkit-backdrop-filter: blur(10px) !important;
         color: var(--arabian-gold) !important;
@@ -597,9 +598,9 @@ img[data-src*="couple.jpg"]:hover {
         font-size: 1.4rem !important;
     }
     
-    /* Ensure "Sakib & Shabrina" has proper spacing below guest-name */
+    /* Ensure "Sakib & Shabrina" has proper spacing below guest-name - 50% larger (1.5rem * 1.5 = 2.25rem) */
     #welcome h2.font-esthetic:last-of-type {
-        font-size: 1.5rem !important;
+        font-size: 2.25rem !important;
         top: 66vh !important;
         padding: 0 1rem;
         margin-top: 0 !important;
@@ -613,16 +614,16 @@ img[data-src*="couple.jpg"]:hover {
     }
     
     #welcome .welcome-button-golden {
-        font-size: 0.9rem !important;
+        font-size: 1.08rem !important;
         padding: 0.5rem 1rem !important;
-        top: 72vh !important;
+        top: 74vh !important;
         max-width: 90vw !important;
         white-space: nowrap;
     }
     
     #welcome .welcome-button-golden .lamp-icon {
-        width: 20px !important;
-        height: 20px !important;
+        width: 29px !important;
+        height: 29px !important;
     }
 }
 
@@ -657,9 +658,9 @@ img[data-src*="couple.jpg"]:hover {
         font-size: 1.5rem !important;
     }
     
-    /* Ensure "Sakib & Shabrina" has proper spacing below guest-name */
+    /* Ensure "Sakib & Shabrina" has proper spacing below guest-name - 50% larger (1.75rem * 1.5 = 2.625rem) */
     #welcome h2.font-esthetic:last-of-type {
-        font-size: 1.75rem !important;
+        font-size: 2.625rem !important;
         top: 69vh !important;
         padding: 0 1.5rem;
         margin-top: 0 !important;
@@ -673,10 +674,15 @@ img[data-src*="couple.jpg"]:hover {
     }
     
     #welcome .welcome-button-golden {
-        font-size: 1rem !important;
+        font-size: 1.2rem !important;
         padding: 0.6rem 1.2rem !important;
-        top: 74vh !important;
+        top: 76vh !important;
         max-width: 85vw !important;
+    }
+    
+    #welcome .welcome-button-golden .lamp-icon {
+        width: 29px !important;
+        height: 29px !important;
     }
 }
 
