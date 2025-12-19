@@ -1,0 +1,87 @@
+/* Simple Desktop Slideshow - Clean Implementation */
+
+.desktop-slideshow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.desktop-slide-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    /* Consistent transition for all images */
+    transition: opacity 2.5s ease-in-out !important;
+    /* NO filters, NO blur - clean and sharp */
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    /* Best quality rendering - no smoothing blur */
+    image-rendering: auto;
+    -ms-interpolation-mode: bicubic;
+    z-index: 0;
+    /* Ensure images are sharp - no font smoothing on images */
+    -webkit-font-smoothing: unset;
+    -moz-osx-font-smoothing: unset;
+}
+
+.desktop-slide-img.active {
+    opacity: 1 !important; /* Full opacity - clean and clear, not faded */
+    z-index: 1;
+    /* Consistent transition for all images */
+    transition: opacity 2.5s ease-in-out !important;
+    /* Ensure active images have no blur */
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+.desktop-slide-img.loaded {
+    /* Images will fade in when loaded */
+}
+
+/* Information box overlay - ensure it's visible above slideshow */
+.desktop-sidebar-overlay {
+    position: relative !important;
+    z-index: 100 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    /* Ensure visibility */
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    pointer-events: auto !important;
+}
+
+.desktop-sidebar-text {
+    position: relative !important;
+    z-index: 100 !important;
+    pointer-events: auto !important;
+}
+
+/* Ensure slideshow images stay below the overlay */
+.desktop-slideshow-container {
+    z-index: 0 !important;
+}
+
+.desktop-slide-img {
+    z-index: 0 !important;
+}
+
+.desktop-slide-img.active {
+    z-index: 1 !important;
+}
+

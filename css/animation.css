@@ -52,11 +52,30 @@
 
 .slide-desktop {
     transform: scale(1);
-    transition: transform 10s linear;
+    transition: opacity 10s linear;
+    will-change: opacity;
+    filter: none !important;
+    -webkit-filter: none !important;
 }
 
 .slide-desktop-active {
-    transform: scale(1.15);
+    transform: scale(1);
+    will-change: opacity;
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* Ensure no blur on desktop slide images */
+.sticky-top .slide-desktop img,
+.sticky-top .slide-desktop .bg-cover-home {
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 /* New Animation Variants */
