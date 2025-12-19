@@ -111,6 +111,20 @@ html[data-bs-theme="light"] .bg-overlay-auto {
     backdrop-filter: blur(0.25rem);
 }
 
+/* COMPLETE REMOVAL of blur for desktop sidebar - HIGHEST SPECIFICITY */
+.sticky-top .desktop-sidebar-overlay.bg-overlay-auto,
+.d-none.d-sm-block .desktop-sidebar-overlay.bg-overlay-auto,
+.sticky-top .bg-overlay-auto.desktop-sidebar-overlay,
+html[data-bs-theme="dark"] .sticky-top .desktop-sidebar-overlay.bg-overlay-auto,
+html[data-bs-theme="light"] .sticky-top .desktop-sidebar-overlay.bg-overlay-auto,
+html[data-bs-theme="dark"] .d-none.d-sm-block .desktop-sidebar-overlay.bg-overlay-auto,
+html[data-bs-theme="light"] .d-none.d-sm-block .desktop-sidebar-overlay.bg-overlay-auto {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
 .hover-area {
     display: none;
     cursor: pointer;

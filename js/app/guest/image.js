@@ -35,8 +35,12 @@ export const image = (() => {
      * @returns {Promise<void>}
      */
     const appendImage = (el, src) => loadedImage(src).then((img) => {
-        el.width = img.naturalWidth;
-        el.height = img.naturalHeight;
+        // Don't set natural width/height for slideshow images to prevent scaling blur
+        // CSS will handle sizing with object-fit: cover
+        if (!el.classList.contains('bg-cover-home') && !el.classList.contains('desktop-slide-img')) {
+            el.width = img.naturalWidth;
+            el.height = img.naturalHeight;
+        }
         el.classList.remove('opacity-0');
         el.src = img.src;
         el.classList.add('loaded');
@@ -68,8 +72,11 @@ export const image = (() => {
     const getByDefault = (el) => {
         el.onerror = () => progress.invalid('image');
         el.onload = () => {
-            el.width = el.naturalWidth;
-            el.height = el.naturalHeight;
+            // Don't set natural width/height for slideshow images to prevent scaling blur
+            if (!el.classList.contains('bg-cover-home') && !el.classList.contains('desktop-slide-img')) {
+                el.width = el.naturalWidth;
+                el.height = el.naturalHeight;
+            }
             el.classList.add('loaded');
             progress.complete('image');
         };

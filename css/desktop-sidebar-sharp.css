@@ -1,0 +1,83 @@
+/* 
+ * Desktop Sidebar Image Sharpness Fix
+ * This file ensures NO blur effects are applied to desktop sidebar background images
+ * Load this AFTER all other CSS files for maximum override power
+ */
+
+/* CRITICAL: Remove ALL blur from desktop sidebar container and overlay */
+.sticky-top .desktop-sidebar-overlay,
+.sticky-top .desktop-sidebar-overlay.bg-overlay-auto,
+.d-none.d-sm-block .desktop-sidebar-overlay,
+.d-none.d-sm-block .desktop-sidebar-overlay.bg-overlay-auto,
+html[data-bs-theme="dark"] .sticky-top .desktop-sidebar-overlay,
+html[data-bs-theme="light"] .sticky-top .desktop-sidebar-overlay,
+html[data-bs-theme="dark"] .sticky-top .bg-overlay-auto,
+html[data-bs-theme="light"] .sticky-top .bg-overlay-auto {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    /* Force no blur on overlay */
+    will-change: auto !important;
+}
+
+/* Remove ALL blur from desktop sidebar images and their containers */
+.sticky-top .bg-cover-home,
+.sticky-top img.bg-cover-home,
+.sticky-top .slide-desktop,
+.sticky-top .slide-desktop img,
+.sticky-top .slide-desktop .bg-cover-home,
+.sticky-top .position-relative img,
+.sticky-top .position-absolute img,
+.sticky-top .d-flex img,
+.d-none.d-sm-block .bg-cover-home,
+.d-none.d-sm-block .slide-desktop img {
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    /* CRITICAL: Override JavaScript-set width/height to prevent excessive scaling */
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    /* Best quality rendering for photos being scaled down */
+    image-rendering: -webkit-optimize-contrast !important;
+    image-rendering: auto !important;
+    -ms-interpolation-mode: bicubic !important;
+    /* Prevent any transforms that could cause blur */
+    transform: translateZ(0) scale(1) !important;
+    -webkit-transform: translateZ(0) scale(1) !important;
+    /* Force GPU rendering */
+    will-change: auto !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    /* Ensure object-fit works correctly */
+    object-fit: cover !important;
+    object-position: center center !important;
+}
+
+/* Remove blur from ALL parent containers */
+.sticky-top .position-relative,
+.sticky-top .position-absolute,
+.sticky-top .d-flex,
+.sticky-top .overflow-hidden,
+.sticky-top .vw-100,
+.sticky-top .vh-100 {
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Theme-specific overrides */
+html[data-bs-theme="dark"] .sticky-top .desktop-sidebar-overlay,
+html[data-bs-theme="light"] .sticky-top .desktop-sidebar-overlay,
+html[data-bs-theme="dark"] .sticky-top .bg-overlay-auto,
+html[data-bs-theme="light"] .sticky-top .bg-overlay-auto {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+

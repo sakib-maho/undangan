@@ -133,11 +133,15 @@ export const guest = (() => {
     };
 
     /**
+     * Simple slideshow - clean implementation
+     * Each image stays for 3 seconds with smooth fade transition
      * @returns {Promise<void>}
      */
     const slide = async () => {
-        const interval = 6000;
-        const slides = document.querySelectorAll('.slide-desktop');
+        const slides = document.querySelectorAll('.desktop-slide-img');
+        const transitionDuration = 2500; // 2.5 seconds for transition
+        const displayDuration = 3000; // 3 seconds to display each image
+        const interval = displayDuration + transitionDuration; // Total time per slide
 
         if (!slides || slides.length === 0) {
             return;
@@ -148,52 +152,70 @@ export const guest = (() => {
             return;
         }
 
-        desktopEl.dispatchEvent(new Event('undangan.slide.stop'));
-
         if (window.getComputedStyle(desktopEl).display === 'none') {
             return;
         }
 
+        // Wait for all images to load before starting slideshow
+        const waitForImages = () => {
+            return Promise.all(
+                Array.from(slides).map((slide) => {
+                    return new Promise((resolve) => {
+                        if (slide.complete && slide.naturalWidth > 0) {
+                            resolve();
+                        } else {
+                            slide.onload = resolve;
+                            slide.onerror = resolve; // Continue even if image fails
+                        }
+                    });
+                })
+            );
+        };
+
+        await waitForImages();
+
+        // Show first slide immediately
+        if (slides.length > 0) {
+            slides[0].classList.add('active');
+        }
+
+        // If only one slide, don't animate
         if (slides.length === 1) {
-            await util.changeOpacity(slides[0], true);
             return;
         }
 
-        let index = 0;
-        for (const [i, s] of slides.entries()) {
-            if (i === index) {
-                s.classList.add('slide-desktop-active');
-                await util.changeOpacity(s, true);
-                break;
-            }
-        }
+        let currentIndex = 0;
+        let isRunning = true;
 
-        let run = true;
-        const nextSlide = async () => {
-            await util.changeOpacity(slides[index], false);
-            slides[index].classList.remove('slide-desktop-active');
+        const nextSlide = () => {
+            if (!isRunning) return;
 
-            index = (index + 1) % slides.length;
+            // Start fading out current slide
+            slides[currentIndex].classList.remove('active');
 
-            if (run) {
-                slides[index].classList.add('slide-desktop-active');
-                await util.changeOpacity(slides[index], true);
-            }
+            // Move to next slide
+            currentIndex = (currentIndex + 1) % slides.length;
 
-            return run;
+            // Start fading in next slide immediately for smooth crossfade
+            // Both transitions happen simultaneously (crossfade effect)
+            slides[currentIndex].classList.add('active');
         };
 
+        // Stop slideshow when element is hidden
         desktopEl.addEventListener('undangan.slide.stop', () => {
-            run = false;
+            isRunning = false;
         });
 
-        const loop = async () => {
-            if (await nextSlide()) {
-                util.timeOut(loop, interval);
+        // Start slideshow loop
+        const startSlideshow = () => {
+            if (isRunning) {
+                nextSlide();
+                util.timeOut(startSlideshow, interval);
             }
         };
 
-        util.timeOut(loop, interval);
+        // Wait before starting the slideshow to show first image
+        util.timeOut(startSlideshow, displayDuration);
     };
 
     /**

@@ -1,5 +1,6 @@
 @import url("common.css");
 @import url("animation.css");
+@import url("desktop-sidebar-sharp.css");
 
 /* Arabian Golden Color Palette */
 :root {
@@ -178,7 +179,7 @@ html[data-bs-theme="light"] .btn-transparent {
 /* Welcome Page Desktop Background Image */
 @media (min-width: 768px) {
     #welcome {
-        background-image: url('../assets/images/desktop_back.png');
+        background-image: url('../assets/images/desktop_back.png?v=2');
         background-size: cover;
         background-position: center 10%;
         background-repeat: no-repeat;
@@ -302,6 +303,38 @@ html[data-bs-theme="dark"] .bg-white-black {
     height: 100%;
     object-fit: cover;
     mask-image: linear-gradient(0.5turn, transparent, black 40%, black 60%, transparent);
+    /* Prevent browser smoothing when scaling */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: auto;
+    -ms-interpolation-mode: nearest-neighbor;
+    filter: none !important;
+    -webkit-filter: none !important;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* Desktop sidebar specific - ensure maximum sharpness for photos */
+.sticky-top .bg-cover-home {
+    /* Use best quality interpolation for photos being scaled down */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: auto;
+    -ms-interpolation-mode: bicubic;
+    /* Prevent any filters that could cause blur */
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    /* Force GPU rendering for better quality */
+    transform: translateZ(0) scale(1);
+    -webkit-transform: translateZ(0) scale(1);
+    will-change: auto;
+    /* Ensure no subpixel rendering */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 /* Home section - Light mode: fade only bottom edge, keep top fully visible */
@@ -417,9 +450,47 @@ section:not(#home) .container > * {
 
 .desktop-sidebar-overlay {
     background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(244, 208, 63, 0.1) 100%);
-    backdrop-filter: blur(10px);
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
     border: 1px solid rgba(212, 175, 55, 0.2);
     box-shadow: 0 8px 32px rgba(212, 175, 55, 0.15);
+}
+
+/* Ensure no blur on desktop sidebar images - COMPREHENSIVE */
+.sticky-top .bg-cover-home,
+.sticky-top .slide-desktop .bg-cover-home,
+.sticky-top .slide-desktop img,
+.sticky-top img.bg-cover-home,
+.d-none.d-sm-block .bg-cover-home,
+.d-none.d-sm-block .slide-desktop img {
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: high-quality;
+}
+
+/* Remove blur from all parent containers of desktop sidebar images */
+.sticky-top .position-relative,
+.sticky-top .d-flex,
+.sticky-top .position-absolute,
+.sticky-top .slide-desktop {
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Override bg-overlay-auto blur specifically for desktop sidebar */
+.sticky-top .desktop-sidebar-overlay.bg-overlay-auto,
+.d-none.d-sm-block .desktop-sidebar-overlay.bg-overlay-auto {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
 }
 
 /* Welcome Page Golden Styling */
@@ -438,6 +509,16 @@ section:not(#home) .container > * {
 .img-center-crop.rounded-circle:hover {
     box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5), 0 0 0 3px rgba(212, 175, 55, 0.3) !important;
     transform: scale(1.02);
+}
+
+/* Zoom and shift couple.jpg image */
+img[data-src*="couple.jpg"] {
+    object-position: 10% center !important;
+    transform: scale(1.3) !important;
+}
+
+img[data-src*="couple.jpg"]:hover {
+    transform: scale(1.32) !important;
 }
 
 /* Welcome Button - Mobile (Original Styles) */
