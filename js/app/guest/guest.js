@@ -30,7 +30,21 @@ export const guest = (() => {
      * @returns {void}
      */
     const countDownDate = () => {
-        const count = (new Date(document.body.getAttribute('data-time').replace(' ', 'T'))).getTime();
+        // Parse the target date/time from data-time attribute
+        // Supports formats: "2026-01-17 11:00:00" or "2026-01-17T11:00:00+09:00"
+        const timeString = document.body.getAttribute('data-time');
+        let count;
+        
+        // Check if timezone is already specified (ISO 8601 format)
+        if (timeString.includes('+') || timeString.includes('Z') || timeString.includes('-') && timeString.match(/[+-]\d{2}:\d{2}$/)) {
+            // Already has timezone, parse directly
+            count = new Date(timeString).getTime();
+        } else {
+            // No timezone specified - assume JST (UTC+9) for wedding events
+            // Replace space with T and add JST timezone offset
+            const jstTimeString = timeString.replace(' ', 'T') + '+09:00';
+            count = new Date(jstTimeString).getTime();
+        }
 
         /**
          * @param {number} num 
@@ -44,12 +58,24 @@ export const guest = (() => {
         const second = document.getElementById('second');
 
         const updateCountdown = () => {
-            const distance = Math.abs(count - Date.now());
+            const now = Date.now();
+            const distance = count - now; // Remove Math.abs() to handle past events
 
-            day.textContent = pad(Math.floor(distance / (1000 * 60 * 60 * 24)));
-            hour.textContent = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-            minute.textContent = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-            second.textContent = pad(Math.floor((distance % (1000 * 60)) / 1000));
+            // If event has passed, show zeros
+            if (distance <= 0) {
+                day.textContent = '00';
+                hour.textContent = '00';
+                minute.textContent = '00';
+                second.textContent = '00';
+                // Optionally, you could show a message here instead
+                // return; // Uncomment to stop updating after event passes
+            } else {
+                // Event is in the future, show countdown
+                day.textContent = pad(Math.floor(distance / (1000 * 60 * 60 * 24)));
+                hour.textContent = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                minute.textContent = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                second.textContent = pad(Math.floor((distance % (1000 * 60)) / 1000));
+            }
 
             util.timeOut(updateCountdown, 1000 - (Date.now() % 1000));
         };
