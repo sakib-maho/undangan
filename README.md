@@ -85,8 +85,13 @@ A beautiful, modern, and fully customizable wedding invitation website template 
      data-url="YOUR_API_URL" 
      data-audio="./assets/music/your-music.mp3" 
      data-confetti="true" 
-     data-time="2024-01-01 09:30:00">
+     data-time="2026-01-17 11:00:00">
    ```
+   
+   **Note on `data-time` format:**
+   - Format: `"YYYY-MM-DD HH:MM:SS"` (assumes JST/UTC+9 if no timezone specified)
+   - Or use ISO 8601 with timezone: `"2026-01-17T11:00:00+09:00"`
+   - The countdown automatically handles timezone conversion
 
    In `dashboard.html`:
    ```html
@@ -95,16 +100,30 @@ A beautiful, modern, and fully customizable wedding invitation website template 
 
 ### API Setup Options
 
-#### Option 1: Free Trial API (Recommended for Quick Start)
+#### Option 1: Self-Hosted Backend (Recommended)
+This project uses a Node.js/Express/PostgreSQL backend. See the [wedding-backend](../wedding-backend) directory for the complete backend implementation.
+
+**Backend Features:**
+- Node.js with Express.js
+- PostgreSQL database
+- JWT authentication for admin
+- Access key authentication for guests
+- Docker support for easy deployment
+- AWS EC2 deployment ready
+
+**Quick Setup:**
+1. Navigate to the backend directory: `cd ../wedding-backend`
+2. Copy `env.example` to `.env` and configure your settings
+3. Start with Docker: `docker-compose up -d`
+4. Get your access key from the database or admin dashboard
+5. Update `data-url` and `data-key` in `index.html`
+
+See [wedding-backend/README.md](../wedding-backend/README.md) for detailed setup instructions.
+
+#### Option 2: Free Trial API
 1. Sign up at [https://trial.ulems.my.id](https://trial.ulems.my.id)
 2. Get your API URL and Access Key
 3. Update the `data-url` and `data-key` attributes
-
-#### Option 2: Self-Hosted Backend
-- Set up your own backend API
-- Configure database (PostgreSQL, MySQL, MongoDB, etc.)
-- Deploy backend service
-- Update API URLs in HTML files
 
 #### Option 3: Without Comments
 - Remove `data-key` and `data-url` attributes from `index.html`
@@ -143,10 +162,17 @@ This creates a `public` folder with optimized files ready for deployment.
 3. Set output directory: `public`
 4. Deploy!
 
-### GitHub Pages
+### GitHub Pages (Current Setup)
+This project is deployed on GitHub Pages:
+- **Live Site**: [https://sakib-maho.github.io/undangan](https://sakib-maho.github.io/undangan)
+- Automated deployment via GitHub Actions
+- Backend API: AWS EC2 instance
+
+**Deployment Steps:**
 1. Build the project: `npm run build:public`
-2. Push `public` folder to `gh-pages` branch
-3. Enable GitHub Pages in repository settings
+2. Push changes to `main` branch
+3. GitHub Actions automatically builds and deploys to `gh-pages`
+4. Site updates automatically
 
 ### Other Hosting
 Upload the `public` folder contents to any static hosting service.
@@ -184,7 +210,7 @@ Change fonts in `index.html` head section.
 - Bride & Groom section
 - Quranic verses section
 - Love story timeline
-- Wedding date with countdown timer
+- Wedding date with countdown timer (timezone-aware, handles past events)
 - Image gallery
 - Love gift section (bank transfer, QRIS, physical gifts)
 - Comments section
@@ -200,6 +226,7 @@ Change fonts in `index.html` head section.
 
 ## 🛠️ Tech Stack
 
+### Frontend
 - **Frontend Framework**: Vanilla JavaScript (ES6+)
 - **CSS Framework**: Bootstrap 5.3.8
 - **Animations**: AOS 2.3.4, Custom CSS animations
@@ -208,6 +235,14 @@ Change fonts in `index.html` head section.
 - **Fonts**: Google Fonts (Josefin Sans, Sacramento, Noto Naskh Arabic)
 - **Build Tool**: esbuild
 - **Package Manager**: npm
+
+### Backend (See [wedding-backend](../wedding-backend))
+- **Runtime**: Node.js (ES Modules)
+- **Framework**: Express.js 4.18.2
+- **Database**: PostgreSQL 16
+- **Authentication**: JWT (jsonwebtoken), bcryptjs
+- **Deployment**: Docker, Docker Compose
+- **Hosting**: AWS EC2
 
 ## 🎯 Design Improvements
 
@@ -218,8 +253,10 @@ This template includes enhanced design features:
 - ✅ **Loading Skeletons** - Modern shimmer loading states
 - ✅ **Image Optimization** - Progressive loading with blur-up effect
 - ✅ **Customization Options** - CSS variables for easy theming
+- ✅ **Countdown Timer Fix** - Timezone support and proper past event handling
 
 See [DESIGN_IMPROVEMENTS.md](./DESIGN_IMPROVEMENTS.md) for detailed documentation.
+See [COUNTDOWN_ISSUES.md](./COUNTDOWN_ISSUES.md) for countdown timer improvements.
 
 ## 📝 Project Structure
 
