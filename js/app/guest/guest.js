@@ -31,19 +31,27 @@ export const guest = (() => {
      */
     const countDownDate = () => {
         // Parse the target date/time from data-time attribute
-        // Supports formats: "2026-01-17 11:00:00" or "2026-01-17T11:00:00+09:00"
+        // Event: Saturday, January 17, 2026 at 11:00 AM JST (UTC+9)
+        // Format: "2026-01-17 11:00:00" (assumed to be JST)
         const timeString = document.body.getAttribute('data-time');
-        let count;
+        let targetTimeUTC;
         
         // Check if timezone is already specified (ISO 8601 format)
-        if (timeString.includes('+') || timeString.includes('Z') || timeString.includes('-') && timeString.match(/[+-]\d{2}:\d{2}$/)) {
+        if (timeString.includes('+') || timeString.includes('Z') || (timeString.includes('-') && timeString.match(/[+-]\d{2}:\d{2}$/))) {
             // Already has timezone, parse directly
-            count = new Date(timeString).getTime();
+            targetTimeUTC = new Date(timeString).getTime();
         } else {
             // No timezone specified - assume JST (UTC+9) for wedding events
             // Replace space with T and add JST timezone offset
             const jstTimeString = timeString.replace(' ', 'T') + '+09:00';
-            count = new Date(jstTimeString).getTime();
+            targetTimeUTC = new Date(jstTimeString).getTime();
+            
+            // Verify the date was parsed correctly
+            if (isNaN(targetTimeUTC)) {
+                console.error('Invalid date format:', timeString);
+                // Fallback: try parsing as local time (not recommended)
+                targetTimeUTC = new Date(timeString.replace(' ', 'T')).getTime();
+            }
         }
 
         /**
@@ -58,8 +66,12 @@ export const guest = (() => {
         const second = document.getElementById('second');
 
         const updateCountdown = () => {
-            const now = Date.now();
-            const distance = count - now; // Remove Math.abs() to handle past events
+            // Use UTC time for calculation to ensure consistency across timezones
+            // Date.now() returns milliseconds since epoch in UTC
+            // targetTimeUTC is also in UTC (milliseconds since epoch)
+            // This ensures all users see the same countdown regardless of their timezone
+            const nowUTC = Date.now();
+            const distance = targetTimeUTC - nowUTC;
 
             // If event has passed, show zeros
             if (distance <= 0) {
@@ -71,12 +83,19 @@ export const guest = (() => {
                 // return; // Uncomment to stop updating after event passes
             } else {
                 // Event is in the future, show countdown
-                day.textContent = pad(Math.floor(distance / (1000 * 60 * 60 * 24)));
-                hour.textContent = pad(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-                minute.textContent = pad(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-                second.textContent = pad(Math.floor((distance % (1000 * 60)) / 1000));
+                // Calculate time remaining (works the same for all timezones)
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                day.textContent = pad(days);
+                hour.textContent = pad(hours);
+                minute.textContent = pad(minutes);
+                second.textContent = pad(seconds);
             }
 
+            // Update every second, synchronized to the second boundary
             util.timeOut(updateCountdown, 1000 - (Date.now() % 1000));
         };
 
