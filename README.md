@@ -1,70 +1,85 @@
-# 💌 Template website undangan pernikahan sederhana
+# Undangan - Wedding Invitation Website
 
-![Thumbnail](/assets/images/banner.webp)
+Interactive wedding invitation website template with animation, countdown, RSVP flow, and share-ready presentation.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/cef32dbf-f26f-4865-84a9-b85a439c9994/deploy-status)](https://app.netlify.com/sites/ulems/deploys)
-[![Hits](https://dikit.my.id/0b3y8q)](https://cie.my.id)
-[![GitHub repo size](https://img.shields.io/github/repo-size/dewanakl/undangan?color=brightgreen)](https://shields.io)
-[![GitHub License](https://img.shields.io/github/license/dewanakl/undangan?color=brightgreen)](https://shields.io)
+![Thumbnail](./assets/images/banner.webp)
 
-## 🚀 Demo
-Untuk kamu yang ingin melihat demo terlebih dahulu:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[https://ulems.my.id/?to=Teman teman semua](https://ulems.my.id/?to=Teman%20teman%20semua)
+## Overview
 
-## 📦 Documentation
+This project provides a customizable invitation landing page built with HTML, CSS, and JavaScript.
 
-* Jalankan perintah `npm install`, lalu `npm run dev`, dan buka `http://localhost:8080`.
-* Ubah isi file `index.html` sesuai keinginanmu.
-* Jika tidak ingin menggunakan **fitur komentar**, hapus atribut `data-url` dan `data-key` di elemen `<body>` pada index.html.
-* Sesuaikan `data-url` pada `<body>` di index dan dashboard sesuai dengan URL backend (jika kamu meng-hosting sendiri).
-* Sesuaikan juga `data-key` di index dengan access key yang bisa kamu ambil dari dashboard.
-* Jika ingin menggunakan GIF, dapatkan Tenor API key di [developers.google.com/tenor](https://developers.google.com/tenor/guides/quickstart).
-* Untuk deployment, jalankan `npm run build:public`. Folder `public` adalah yang akan kamu upload.
-* Untuk backend self-hosting, lihat penjelasan di bawah, atau gunakan **trial API** secara gratis.
+Main goals:
 
-> Undangan ini hanya menggunakan HTML, CSS, dan JavaScript biasa. NPM digunakan agar file JavaScript bisa langsung dieksekusi (bukan bertipe module lagi).
+- Beautiful visual presentation
+- Mobile-friendly invitation experience
+- Easy text/content customization
+- Simple static deployment workflow
 
-> Jika tetap ingin tanpa NPM, ubah `src="./dist/guest.js"` menjadi `src="./js/guest.js" type="module"` pada tag `<head>` di index dan dashboard.html, dengan risiko glitch tema di awal loading.
+## Features
 
-> Jika kamu punya pertanyaan, gunakan fitur `discussions` agar bisa dibaca juga oleh teman-teman lainnya.
+- Animated hero and section transitions
+- Guest greeting via URL query parameter
+- Dashboard + guest page structure
+- Optional comments/integration hooks
+- Optional GIF/Tenor integration
+- Build script for deployable `public/` output
 
-> [!WARNING]  
-> Gunakan versi 3.14.0, untuk versi 4 masih tahap pengembangan dan berpotensi teredapat bug 🐛
+## Tech Stack
 
-## 🔥 Deployment API
+- Bootstrap 5
+- Vanilla JavaScript
+- AOS (scroll animation)
+- Font Awesome
+- Canvas Confetti
 
-- Video\
-    otw
+## Local Development
 
-- Presentation
-    [https://docs.google.com/presentation](https://docs.google.com/presentation/d/1EY2YmWdZUI7ASoo0f2wvU7ec_Yt0uZanYa8YLbfNysk/edit)
+```bash
+npm install
+npm run dev
+```
 
-## ⏰ Trial API
-Untuk kamu yang ingin mencoba secara gratis:
+Open `http://localhost:8080`.
 
-[https://trial.ulems.my.id](https://trial.ulems.my.id)
+## Build for Deployment
 
-## ⚙️ Tech stack
+```bash
+npm run build:public
+```
 
-- Bootstrap 5.3.8
-- AOS 2.3.4
-- Fontawesome 7.1.0
-- Canvas Confetti 1.9.3
-- Google Fonts
-- Vanilla JS
+Deploy the generated `public/` directory to your static hosting provider.
 
-## 🎨 Credit
-All visual assets in this project are sourced from Pixabay.
+## Customization
 
-## 🤝 Contributing
+1. Edit invitation content in `index.html`
+2. Update visual assets in `assets/`
+3. Adjust styles in `css/`
+4. Update behavior in `js/`
+5. If comments are not needed, remove related `data-url` and `data-key` attributes in `<body>`
 
-I'm very open to those of you who want to contribute to the undangan!
+## Project Structure
 
-## 🐞 Security Vulnerabilities
+- `index.html` - Guest invitation page
+- `dashboard.html` - Dashboard/config page
+- `assets/` - Images and static assets
+- `css/` - Styles
+- `js/` - Frontend logic
+- `package.json` - Scripts and dependencies
 
-If you find any security vulnerabilities in this undangan, please email DKL via [dewanakretarta29@gmail.com](mailto:dewanakretarta29@gmail.com).
+## Credits
 
-## 📜 License
+Visual assets are sourced from Pixabay and related free resources.
 
-Undangan is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Contributing
+
+Contributions are welcome. Open an issue or pull request with clear steps and context.
+
+## Security
+
+If you discover a security issue, please open a private report to the repository owner.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
